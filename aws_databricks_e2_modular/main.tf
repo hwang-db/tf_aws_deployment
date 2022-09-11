@@ -28,27 +28,47 @@ locals {
 
 }
 
-
 module "my_mws_network" {
-  source                      = "./modules/mws_network"
-  existing_vpc_id             = aws_vpc.mainvpc.id
-  databricks_account_username = var.databricks_account_username
-  databricks_account_password = var.databricks_account_password
-  databricks_account_id       = var.databricks_account_id
-  region                      = var.region
-  aws_nat_gateway_id          = aws_nat_gateway.nat_gateways[0].id
-  private_subnet_pair         = var.private_subnet_pair
-  security_group_ids          = [aws_security_group.test_sg.id]
-  prefix                      = local.prefix
+  providers = {
+    databricks = databricks.mws
+    aws        = aws
+  }
+
+  source                = "./modules/mws_network"
+  existing_vpc_id       = aws_vpc.mainvpc.id
+  databricks_account_id = var.databricks_account_id
+  region                = var.region
+  aws_nat_gateway_id    = aws_nat_gateway.nat_gateways[0].id
+  private_subnet_pair   = var.private_subnet_pair
+  security_group_ids    = [aws_security_group.test_sg.id]
+  prefix                = local.prefix
 }
 
 module "my_root_bucket" {
-  source                      = "./modules/mws_storage"
-  databricks_account_username = var.databricks_account_username
-  databricks_account_password = var.databricks_account_password
-  databricks_account_id       = var.databricks_account_id
-  root_bucket_name            = local.root_bucket_name
-  region                      = var.region
+  providers = {
+    databricks = databricks.mws
+    aws        = aws
+  }
+
+  source                = "./modules/mws_storage"
+  databricks_account_id = var.databricks_account_id
+  root_bucket_name      = local.root_bucket_name
+  region                = var.region
+}
+
+module "workspace1" {
+  source = "./modules/mws_workspace"
+  providers = {
+    databricks = databricks.mws
+    aws        = aws
+  }
+
+  databricks_account_id    = var.databricks_account_id
+  workspace_name           = local.prefix
+  region                   = var.region
+  credentials_id           = databricks_mws_credentials.this.credentials_id
+  storage_configuration_id = module.my_root_bucket.storage_configuration_id
+  network_id               = module.my_mws_network.network_id
 }
 
 // create PAT token to provision entities within workspace
@@ -56,21 +76,4 @@ resource "databricks_token" "pat" {
   provider         = databricks.created_workspace
   comment          = "Terraform Provisioning"
   lifetime_seconds = 86400
-}
-
-
-module "workspace1" {
-  source = "./modules/mws_workspace"
-  providers = {
-    databricks = databricks.mws
-  }
-
-  databricks_account_id       = var.databricks_account_id
-  databricks_account_password = var.databricks_account_password
-  databricks_account_username = var.databricks_account_username
-  workspace_name              = local.prefix
-  region                      = var.region
-  credentials_id              = databricks_mws_credentials.this.credentials_id
-  storage_configuration_id    = module.my_root_bucket.storage_configuration_id
-  network_id                  = module.my_mws_network.network_id
 }

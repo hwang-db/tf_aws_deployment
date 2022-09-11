@@ -1,3 +1,7 @@
+variable "databricks_account_id" {
+  type = string
+}
+
 variable "credentials_id" {
   type = string
 }
@@ -15,17 +19,5 @@ variable "region" {
 }
 
 variable "workspace_name" {
-  type = string
-}
-
-variable "databricks_account_username" {
-  type = string
-}
-
-variable "databricks_account_password" {
-  type = string
-}
-
-variable "databricks_account_id" {
   type = string
 }

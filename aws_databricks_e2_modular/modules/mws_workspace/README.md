@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-## Requirements
+## Description
 
-No requirements.
+This module `mws_workspace` creates an E2 Databricks workspace into an existing customer managed VPC; the module contains 2 sub-modules: `mws_network` and `mws_storage`, which are 2 abstracted layers as pre-requisite for the E2 workspace creation.
 
 ## Providers
 

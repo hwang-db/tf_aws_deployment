@@ -1,6 +1,6 @@
 ## AWS Databricks E2 Workspace Deployment at scale
 
-In this example, we created modules to deploy E2 Databricks workspaces at scale. Users of this template should supply configuration variables for each workspaces and edit the locals block in `main.tf`, to deploy multiple E2 workspaces (customer-managed VPC setup). This modular design of E2 workspaces allow customer to deploy, manage and delete individual workspaces easily, with minimal set of scripts.
+In this example, we created modules to deploy E2 Databricks workspaces at scale. Users of this template should supply configuration variables for each workspaces and edit the locals block in `main.tf`, to deploy multiple E2 workspaces (customer-managed VPC setup). This modular design of E2 workspaces allow customer to deploy, manage and delete individual workspaces easily, with minimal set of scripts. This template takes reference (e.g. CMK module) from https://github.com/andyweaves/databricks-terraform-e2e-examples from andrew.weaver@databricks.com and adapted to specific customer requirements.
 
 ## Get Started
 
@@ -19,12 +19,12 @@ Step 2: Modify `variables.tf`, for each workspace you need to write a variable b
 
 ```terraform
 variable "workspace_1_config" {
-default = {
-    private_subnet_pair = { subnet1_cidr = "10.109.4.0/23", subnet2_cidr = "10.109.6.0/23" }
-    workspace_name      = "test-workspace-1"
-    prefix              = "ws1"
-    region              = "ap-southeast-1"
-}
+    default = {
+        private_subnet_pair = { subnet1_cidr = "10.109.4.0/23", subnet2_cidr = "10.109.6.0/23" }
+        workspace_name      = "test-workspace-1"
+        prefix              = "ws1"
+        region              = "ap-southeast-1"
+    }
 }
 ```
 

@@ -6,12 +6,8 @@ variable "credentials_id" {
   type = string
 }
 
-variable "storage_configuration_id" {
-  type = string
-}
-
-variable "network_id" {
-  type = string
+variable "prefix" {
+  type = string // should be a randomized string  
 }
 
 variable "region" {
@@ -20,4 +16,21 @@ variable "region" {
 
 variable "workspace_name" {
   type = string
+}
+
+// for network config
+variable "existing_vpc_id" {
+  type = string
+}
+
+variable "nat_gateways_id" {
+  type = string
+}
+
+variable "security_group_ids" {
+  type = list(string)
+}
+
+variable "private_subnet_pair" {
+  type = list(string)
 }

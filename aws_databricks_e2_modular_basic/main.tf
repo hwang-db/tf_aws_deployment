@@ -8,36 +8,26 @@ resource "random_string" "naming" {
 locals {
   prefix           = "demo${random_string.naming.result}"
   root_bucket_name = "${random_string.naming.result}-rootbucket"
-  workspace_confs = {
-    workspace_1 = var.workspace_1_config
-    workspace_2 = var.workspace_2_config
-  }
-}
-
-# general for_each example
-
-module "workspace_collection" {
-  for_each = local.workspace_confs
-
-  providers = {
-    databricks = databricks.mws
-    aws        = aws
+  /*
+  # get subnets pairs from variables
+  mws_networks_configs = {
+    private_subnet_1 = var.private_subnets_cidr[0]
+    private_subnet_2 = var.private_subnets_cidr[1]
   }
 
-  source                = "./modules/mws_workspace"
-  databricks_account_id = var.databricks_account_id
-  credentials_id        = databricks_mws_credentials.this.credentials_id
-  prefix                = "${each.value.prefix}-${local.prefix}"
-  region                = each.value.region
-  workspace_name        = each.value.workspace_name
-  existing_vpc_id       = aws_vpc.mainvpc.id
-  nat_gateways_id       = aws_nat_gateway.nat_gateways[0].id
-  security_group_ids    = [aws_security_group.test_sg.id]
-  private_subnet_pair   = [each.value.private_subnet_pair.subnet1_cidr, each.value.private_subnet_pair.subnet2_cidr]
+  workspaces = {
+    "ws1" = { vm_size = "small", zone = "a" },
+    "ws2" = { vm_size = "small", zone = "b" },
+    "ws3" = { vm_size = "small", zone = "c" }
+  }
+
+  for_each = local.vms
+  name     = each.key
+  zone     = each.zone
+*/
+
 }
 
-/*
-// workspace 1
 module "my_mws_network" {
   providers = {
     databricks = databricks.mws
@@ -127,4 +117,3 @@ resource "databricks_token" "pat" {
   comment          = "Terraform Provisioning"
   lifetime_seconds = 86400
 }
-*/

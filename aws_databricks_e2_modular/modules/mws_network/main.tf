@@ -31,7 +31,7 @@ resource "aws_route_table_association" "private_route_table_associations" {
   route_table_id = aws_route_table.private_route_tables[count.index].id
 }
 
-resource "databricks_mws_networks" "mwsnetwork" { // provider will be explicitly passed from calling module
+resource "databricks_mws_networks" "mwsnetwork" {
   account_id         = var.databricks_account_id
   network_name       = "${var.prefix}-network"
   vpc_id             = var.existing_vpc_id

@@ -1,9 +1,8 @@
-<!-- BEGIN_TF_DOCS -->
 ## AWS Databricks E2 Workspace Deployment at scale
 
-In this example, we created modules to deploy an E2 Databricks workspace at scale. Users of this template should supply configuration variables for each workspaces and edit the locals block in `main.tf`.
+In this example, we created modules to deploy an E2 Databricks workspace at scale. Users of this template should supply configuration variables for each workspaces and edit the locals block in `main.tf`. 
 
-
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name                                                    | Version |
@@ -63,7 +62,8 @@ In this example, we created modules to deploy an E2 Databricks workspace at scal
 
 ## Outputs
 
-| Name                                          | Description |
-| --------------------------------------------- | ----------- |
-| <a name="output_arn"></a> [arn](#output\_arn) | n/a         |
+| Name                                                                                   | Description |
+| -------------------------------------------------------------------------------------- | ----------- |
+| <a name="output_arn"></a> [arn](#output\_arn)                                          | n/a         |
+| <a name="output_databricks_hosts"></a> [databricks\_hosts](#output\_databricks\_hosts) | n/a         |
 <!-- END_TF_DOCS -->

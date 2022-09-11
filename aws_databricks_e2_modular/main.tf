@@ -14,6 +14,14 @@ locals {
   }
 }
 
+module "databricks_cmk" {
+  source                 = "./modules/databricks_cmk"
+  cross_account_role_arn = aws_iam_role.cross_account_role.arn
+  resource_prefix        = local.prefix
+  region                 = var.region
+  cmk_admin              = var.cmk_admin
+}
+
 module "workspace_collection" {
   for_each = local.workspace_confs
 
@@ -32,6 +40,8 @@ module "workspace_collection" {
   nat_gateways_id       = aws_nat_gateway.nat_gateways[0].id
   security_group_ids    = [aws_security_group.test_sg.id]
   private_subnet_pair   = [each.value.private_subnet_pair.subnet1_cidr, each.value.private_subnet_pair.subnet2_cidr]
+  workspace_storage_cmk = module.databricks_cmk.workspace_storage_cmk
+  managed_services_cmk  = module.databricks_cmk.managed_services_cmk
 }
 
 /*

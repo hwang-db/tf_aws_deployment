@@ -15,6 +15,12 @@ variable "region" {
   default = "ap-southeast-1"
 }
 
+#cmk
+variable "cmk_admin" {
+  type    = string
+  default = "arn:aws:iam::026655378770:user/hao"
+}
+
 variable "tags" {
   default = {}
 }

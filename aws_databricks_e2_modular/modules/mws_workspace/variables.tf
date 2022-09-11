@@ -34,3 +34,9 @@ variable "security_group_ids" {
 variable "private_subnet_pair" {
   type = list(string)
 }
+// for cmk config
+variable "managed_services_cmk" {
+}
+
+variable "workspace_storage_cmk" {
+}

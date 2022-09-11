@@ -6,7 +6,7 @@ In this example, we created modules to deploy E2 Databricks workspaces at scale.
 
 Step 1: Clone this repo to local, set environment variables for `aws` and `databricks` providers authentication:
     
-```
+```bash
 export TF_VAR_databricks_account_username=your_username
 export TF_VAR_databricks_account_password=your_password
 export TF_VAR_databricks_account_id=your_databricks_E2_account_id

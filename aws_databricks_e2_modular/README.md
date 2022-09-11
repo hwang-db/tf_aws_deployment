@@ -1,6 +1,6 @@
 ## AWS Databricks E2 Workspace Deployment at scale
 
-In this example, we created modules to deploy E2 Databricks workspaces at scale. Users of this template should supply configuration variables for each workspaces and edit the locals block in `main.tf`, to deploy multiple E2 workspaces (customer-managed VPC setup).
+In this example, we created modules to deploy E2 Databricks workspaces at scale. Users of this template should supply configuration variables for each workspaces and edit the locals block in `main.tf`, to deploy multiple E2 workspaces (customer-managed VPC setup). This modular design of E2 workspaces allow customer to deploy, manage and delete individual workspaces easily, with minimal set of scripts.
 
 ## Get Started
 
@@ -39,6 +39,12 @@ workspace_confs = {
 ```
 
 Step 4: Check your VPC and subnet CIDR, then run `terraform init` and `terraform apply` to deploy your workspaces; this will deploy multiple E2 workspaces into your VPC.
+
+## Common Actions
+
+### To delete specific workspace
+You just need to remove the workspace config from `main.tf` - locals block, then run `terraform apply` to delete the workspace.
+
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

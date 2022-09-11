@@ -8,14 +8,11 @@ resource "random_string" "naming" {
 locals {
   prefix           = "demo${random_string.naming.result}"
   root_bucket_name = "${random_string.naming.result}-rootbucket"
-  workspace_confs = {
+  workspace_confs = { //add more workspaces here, remove from here to delete specific workspace
     workspace_1 = var.workspace_1_config
     workspace_2 = var.workspace_2_config
-    workspace_3 = var.workspace_3_config
   }
 }
-
-# general for_each example
 
 module "workspace_collection" {
   for_each = local.workspace_confs

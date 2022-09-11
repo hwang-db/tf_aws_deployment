@@ -34,12 +34,11 @@ module "my_mws_network" {
     aws        = aws
   }
 
-  source             = "./modules/mws_network"
-  aws_nat_gateway_id = aws_nat_gateway.nat_gateways[0].id
-  existing_vpc_id    = aws_vpc.mainvpc.id
-  security_group_ids = [aws_security_group.test_sg.id]
-  # from workspace config var
+  source                = "./modules/mws_network"
   databricks_account_id = var.databricks_account_id
+  aws_nat_gateway_id    = aws_nat_gateway.nat_gateways[0].id
+  existing_vpc_id       = aws_vpc.mainvpc.id
+  security_group_ids    = [aws_security_group.test_sg.id]
   region                = var.workspace_1_config.region
   private_subnet_pair   = [var.workspace_1_config.private_subnet_pair.subnet1_cidr, var.workspace_1_config.private_subnet_pair.subnet2_cidr]
   prefix                = "${var.workspace_1_config.prefix}-${local.prefix}"
@@ -50,7 +49,6 @@ module "my_root_bucket" {
     databricks = databricks.mws
     aws        = aws
   }
-
   source                = "./modules/mws_storage"
   databricks_account_id = var.databricks_account_id
   region                = var.workspace_1_config.region
@@ -63,7 +61,6 @@ module "workspace1" {
     databricks = databricks.mws
     aws        = aws
   }
-
   databricks_account_id    = var.databricks_account_id
   workspace_name           = var.workspace_1_config.workspace_name
   region                   = var.workspace_1_config.region
@@ -79,13 +76,11 @@ module "my_mws_network2" {
     databricks = databricks.mws
     aws        = aws
   }
-
-  source             = "./modules/mws_network"
-  aws_nat_gateway_id = aws_nat_gateway.nat_gateways[0].id
-  existing_vpc_id    = aws_vpc.mainvpc.id
-  security_group_ids = [aws_security_group.test_sg.id]
-  # from workspace config var
+  source                = "./modules/mws_network"
   databricks_account_id = var.databricks_account_id
+  aws_nat_gateway_id    = aws_nat_gateway.nat_gateways[0].id
+  existing_vpc_id       = aws_vpc.mainvpc.id
+  security_group_ids    = [aws_security_group.test_sg.id]
   region                = var.workspace_2_config.region
   private_subnet_pair   = [var.workspace_2_config.private_subnet_pair.subnet1_cidr, var.workspace_2_config.private_subnet_pair.subnet2_cidr]
   prefix                = "${var.workspace_2_config.prefix}-${local.prefix}"
@@ -96,7 +91,6 @@ module "my_root_bucket2" {
     databricks = databricks.mws
     aws        = aws
   }
-
   source                = "./modules/mws_storage"
   databricks_account_id = var.databricks_account_id
   region                = var.workspace_2_config.region
@@ -109,7 +103,6 @@ module "workspace2" {
     databricks = databricks.mws
     aws        = aws
   }
-
   databricks_account_id    = var.databricks_account_id
   workspace_name           = var.workspace_2_config.workspace_name
   region                   = var.workspace_2_config.region

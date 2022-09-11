@@ -46,7 +46,7 @@ Step 4: Check your VPC and subnet CIDR, then run `terraform init` and `terraform
 You just need to remove the workspace config from `main.tf` - locals block, then run `terraform apply` to delete the workspace. For example, to delete workspace_1, you need to remove the following lines from `main.tf` - locals block:
 
 ```terraform
-    workspace_1 = var.workspace_1_config
+workspace_1 = var.workspace_1_config
 ```
 
 Then run `terraform apply` to delete workspace_1.

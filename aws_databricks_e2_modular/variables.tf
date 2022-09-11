@@ -45,3 +45,12 @@ variable "workspace_2_config" {
     region              = "ap-southeast-1"
   }
 }
+
+variable "workspace_3_config" {
+  default = {
+    private_subnet_pair = { subnet1_cidr = "10.109.12.0/23", subnet2_cidr = "10.109.14.0/23" }
+    workspace_name      = "test-workspace-3"
+    prefix              = "ws3"
+    region              = "ap-southeast-1"
+  }
+}

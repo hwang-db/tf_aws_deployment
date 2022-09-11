@@ -11,6 +11,7 @@ locals {
   workspace_confs = {
     workspace_1 = var.workspace_1_config
     workspace_2 = var.workspace_2_config
+    workspace_3 = var.workspace_3_config
   }
 }
 

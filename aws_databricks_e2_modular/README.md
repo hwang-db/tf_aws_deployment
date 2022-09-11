@@ -6,37 +6,37 @@ In this example, we created modules to deploy E2 Databricks workspaces at scale.
 
 Step 1: Clone this repo to local, set environment variables for `aws` and `databricks` providers authentication:
     
-    ```bash
-    export TF_VAR_databricks_account_username=your_username
-    export TF_VAR_databricks_account_password=your_password
-    export TF_VAR_databricks_account_id=your_databricks_E2_account_id
+```
+export TF_VAR_databricks_account_username=your_username
+export TF_VAR_databricks_account_password=your_password
+export TF_VAR_databricks_account_id=your_databricks_E2_account_id
 
-    export AWS_ACCESS_KEY_ID=your_aws_role_access_key_id
-    export AWS_SECRET_ACCESS_KEY=your_aws_role_secret_access_key
-    ```
+export AWS_ACCESS_KEY_ID=your_aws_role_access_key_id
+export AWS_SECRET_ACCESS_KEY=your_aws_role_secret_access_key
+```
 
 Step 2: Modify `variables.tf`, for each workspace you need to write a variable block like this:
 
-    ```hcl
-    variable "workspace_1_config" {
-    default = {
-        private_subnet_pair = { subnet1_cidr = "10.109.4.0/23", subnet2_cidr = "10.109.6.0/23" }
-        workspace_name      = "test-workspace-1"
-        prefix              = "ws1"
-        region              = "ap-southeast-1"
-    }
-    }
-    ```
+```terraform
+variable "workspace_1_config" {
+default = {
+    private_subnet_pair = { subnet1_cidr = "10.109.4.0/23", subnet2_cidr = "10.109.6.0/23" }
+    workspace_name      = "test-workspace-1"
+    prefix              = "ws1"
+    region              = "ap-southeast-1"
+}
+}
+```
 
 Step 3: Modify `main.tf` - locals block, add your workspace config var into locals, like this:
 
-    ```hcl
-    workspace_confs = {
-        workspace_1 = var.workspace_1_config
-        workspace_2 = var.workspace_2_config
-        workspace_3 = var.workspace_3_config
-    }
-    ```
+```terraform
+workspace_confs = {
+    workspace_1 = var.workspace_1_config
+    workspace_2 = var.workspace_2_config
+    workspace_3 = var.workspace_3_config
+}
+```
 
 Step 4: Check your VPC and subnet CIDR, then run `terraform init` and `terraform apply` to deploy your workspaces; this will deploy multiple E2 workspaces into your VPC.
 

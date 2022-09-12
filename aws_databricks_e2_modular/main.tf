@@ -42,6 +42,7 @@ module "workspace_collection" {
   private_subnet_pair   = [each.value.private_subnet_pair.subnet1_cidr, each.value.private_subnet_pair.subnet2_cidr]
   workspace_storage_cmk = module.databricks_cmk.workspace_storage_cmk
   managed_services_cmk  = module.databricks_cmk.managed_services_cmk
+  root_bucket_name      = each.value.root_bucket_name
 }
 
 /*

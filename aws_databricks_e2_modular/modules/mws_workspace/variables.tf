@@ -40,3 +40,7 @@ variable "managed_services_cmk" {
 
 variable "workspace_storage_cmk" {
 }
+
+variable "root_bucket_name" {
+  type = string
+}

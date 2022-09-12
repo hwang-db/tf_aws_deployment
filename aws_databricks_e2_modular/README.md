@@ -24,6 +24,7 @@ variable "workspace_1_config" {
         workspace_name      = "test-workspace-1"
         prefix              = "ws1"
         region              = "ap-southeast-1"
+        root_bucket_name    = "test-workspace-1-rootbucket"
     }
 }
 ```
@@ -31,7 +32,7 @@ variable "workspace_1_config" {
 Since we are using CMK (customer managed key) for encryption on root S3 bucket and Databricks managed resources, you also need to provide an AWS IAM ARN for `cmk_admin`. The format will be: `arn:aws:iam::123456:user/xxx`. You need to create this user and assign KMS admin role to it.
 
 
-Step 3: Modify `main.tf` - locals block, add your workspace config var into locals, like this:
+Step 3: Modify `main.tf` - locals block, add/remove your workspace config var inside locals, like this:
 
 ```terraform
 workspace_confs = {

@@ -13,7 +13,7 @@ module "my_root_bucket" {
   source                = "./modules/mws_storage"
   databricks_account_id = var.databricks_account_id
   region                = var.region
-  root_bucket_name      = "${var.prefix}-storage"
+  root_bucket_name      = var.root_bucket_name
 }
 
 resource "databricks_mws_customer_managed_keys" "workspace_storage" {

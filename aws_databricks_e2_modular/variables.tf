@@ -40,6 +40,7 @@ variable "workspace_1_config" {
     workspace_name      = "test-workspace-1"
     prefix              = "ws1"
     region              = "ap-southeast-1"
+    root_bucket_name    = "test-workspace-1-rootbucket"
   }
 }
 
@@ -49,6 +50,7 @@ variable "workspace_2_config" {
     workspace_name      = "test-workspace-2"
     prefix              = "ws2"
     region              = "ap-southeast-1"
+    root_bucket_name    = "test-workspace-2-rootbucket"
   }
 }
 
@@ -58,5 +60,6 @@ variable "workspace_3_config" {
     workspace_name      = "test-workspace-3"
     prefix              = "ws3"
     region              = "ap-southeast-1"
+    root_bucket_name    = "test-workspace-3-rootbucket"
   }
 }

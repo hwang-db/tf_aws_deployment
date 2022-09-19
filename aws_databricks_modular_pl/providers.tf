@@ -25,8 +25,10 @@ provider "databricks" {
 }
 
 // initialize provider in normal mode
+/*
 provider "databricks" {
   // in normal scenario you won't have to give providers aliases
   alias = "created_workspace"
   host  = module.workspace1.workspace_url
 }
+*/

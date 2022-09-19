@@ -32,4 +32,3 @@ provider "databricks" {
   host  = module.workspace1.workspace_url
 }
 */
-

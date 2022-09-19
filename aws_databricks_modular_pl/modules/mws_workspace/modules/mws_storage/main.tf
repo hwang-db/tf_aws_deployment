@@ -5,7 +5,6 @@ resource "aws_s3_bucket" "root_storage_bucket" {
     enabled = false
   }
   force_destroy = true
-  tags          = merge({ Name = var.root_bucket_name })
 }
 
 resource "aws_s3_bucket_public_access_block" "root_storage_bucket" {
@@ -23,8 +22,8 @@ resource "aws_s3_bucket_policy" "root_bucket_policy" {
   policy = data.databricks_aws_bucket_policy.this.json
 }
 
-resource "databricks_mws_storage_configurations" "this" { // provider will be explicitly passed from calling module
+resource "databricks_mws_storage_configurations" "this" {
   account_id                 = var.databricks_account_id
   bucket_name                = aws_s3_bucket.root_storage_bucket.bucket
-  storage_configuration_name = "${var.root_bucket_name}-storage"
+  storage_configuration_name = var.root_bucket_name
 }

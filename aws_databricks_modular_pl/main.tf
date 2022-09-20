@@ -55,6 +55,7 @@ module "workspace_collection" {
   ]
 }
 
+
 /*
 // create PAT token to provision entities within workspace
 resource "databricks_token" "pat" {

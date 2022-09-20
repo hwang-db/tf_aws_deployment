@@ -85,7 +85,7 @@ resource "aws_vpc_endpoint" "backend_rest" {
   vpc_endpoint_type  = "Interface"
   security_group_ids = [aws_security_group.privatelink.id]
   subnet_ids         = aws_subnet.privatelink[*].id
-  //private_dns_enabled = true
+  private_dns_enabled = true
   depends_on = [aws_subnet.privatelink]
   tags = {
     Name = "${local.prefix}-databricks-backend-rest"
@@ -98,7 +98,7 @@ resource "aws_vpc_endpoint" "backend_relay" {
   vpc_endpoint_type  = "Interface"
   security_group_ids = [aws_security_group.privatelink.id]
   subnet_ids         = aws_subnet.privatelink[*].id
-  //private_dns_enabled = true
+  private_dns_enabled = true
   depends_on = [aws_subnet.privatelink]
   tags = {
     Name = "${local.prefix}-databricks-backend-relay"

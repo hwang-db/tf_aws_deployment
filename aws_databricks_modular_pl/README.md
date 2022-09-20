@@ -1,4 +1,5 @@
-## AWS Databricks Multiple Workspace Deployment with KMS and Customer-managed VPC at scale
+AWS Databricks Multiple Workspace Deployment with KMS and Customer-managed VPC at scale
+=========================
 
 In this example, we created modules to deploy E2 Databricks workspaces at scale. Users of this template should supply configuration variables for each workspaces and edit the locals block in `main.tf`, to deploy multiple E2 workspaces (customer-managed VPC setup). This modular design of E2 workspaces allow customer to deploy, manage and delete individual workspaces easily, with minimal set of scripts. This template takes reference (e.g. CMK module) from https://github.com/andyweaves/databricks-terraform-e2e-examples from andrew.weaver@databricks.com and adapted to specific customer requirements.
 
@@ -43,6 +44,41 @@ workspace_confs = {
 ```
 
 Step 4: Check your VPC and subnet CIDR, then run `terraform init` and `terraform apply` to deploy your workspaces; this will deploy multiple E2 workspaces into your VPC.
+
+
+> Folder Structure
+
+    .
+    ├── iam.tf
+    ├── main.tf
+    ├── privatelink.tf
+    ├── providers.tf
+    ├── vpc.tf
+    ├── variables.tf
+    ├── outputs.tf
+    ├── modules   
+        ├── databricks_cmk
+            ├── main.tf         
+            ├── variables.tf    
+            ├── outputs.tf      
+        ├── mws_workspace
+            ├── main.tf         
+            ├── variables.tf    
+            ├── outputs.tf      
+            ├── modules
+                ├── mws_network
+                    ├── main.tf
+                    ├── variables.tf
+                    ├── outputs.tf
+                ├── mws_storage
+                    ├── main.tf
+                    ├── variables.tf
+                    ├── outputs.tf
+
+## Private Links related steps
+
+Due to a know open issue, we need to run `terraform apply` twice and do some commenting/uncommenting during the deployment stage. 
+
 
 ## Common Actions
 

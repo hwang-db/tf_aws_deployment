@@ -7,6 +7,8 @@ module "my_mws_network" {
   region                = var.region
   private_subnet_pair   = var.private_subnet_pair
   prefix                = "${var.prefix}-network"
+  relay_vpce_id         = var.relay_vpce_id
+  rest_vpce_id          = var.rest_vpce_id
 }
 
 module "my_root_bucket" {
@@ -34,10 +36,23 @@ resource "databricks_mws_customer_managed_keys" "managed_services" {
   use_cases = ["MANAGED_SERVICES"]
 }
 
+
+resource "databricks_mws_private_access_settings" "pas" {
+  account_id                   = var.databricks_account_id
+  private_access_settings_name = "Private Access Settings for ${var.prefix}"
+  region                       = var.region
+  public_access_enabled        = true
+  private_access_level         = "ACCOUNT" // a fix for recent changes - 202209
+}
+
+
 resource "databricks_mws_workspaces" "this" {
-  account_id     = var.databricks_account_id
-  aws_region     = var.region
-  workspace_name = var.workspace_name
+  account_id                 = var.databricks_account_id
+  aws_region                 = var.region
+  workspace_name             = var.workspace_name
+  private_access_settings_id = databricks_mws_private_access_settings.pas.private_access_settings_id
+  pricing_tier               = "ENTERPRISE"
+
   # deployment_name = local.prefix
 
   credentials_id           = var.credentials_id
@@ -47,4 +62,6 @@ resource "databricks_mws_workspaces" "this" {
   # cmk
   storage_customer_managed_key_id          = databricks_mws_customer_managed_keys.workspace_storage.customer_managed_key_id
   managed_services_customer_managed_key_id = databricks_mws_customer_managed_keys.managed_services.customer_managed_key_id
+
+  depends_on = [module.my_mws_network, module.my_root_bucket]
 }

@@ -1,10 +1,8 @@
-/*
 output "databricks_hosts" {
   value = tomap({
     for k, ws in module.workspace_collection : k => ws.workspace_url
   })
 }
-*/
 
 output "arn" {
   value = aws_iam_role.cross_account_role.arn

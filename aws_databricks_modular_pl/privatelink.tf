@@ -85,7 +85,7 @@ resource "aws_vpc_endpoint" "backend_rest" {
   vpc_endpoint_type  = "Interface"
   security_group_ids = [aws_security_group.privatelink.id]
   subnet_ids         = aws_subnet.privatelink[*].id
-  private_dns_enabled = true
+  private_dns_enabled = true // try to directly set this to true in the first apply
   depends_on = [aws_subnet.privatelink]
   tags = {
     Name = "${local.prefix}-databricks-backend-rest"

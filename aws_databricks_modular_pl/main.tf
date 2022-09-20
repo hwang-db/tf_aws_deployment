@@ -6,15 +6,15 @@ resource "random_string" "naming" {
 }
 
 locals {
-  prefix           = "demo${random_string.naming.result}"
-  root_bucket_name = "${random_string.naming.result}-rootbucket"
+  prefix              = "demo${random_string.naming.result}"
+  root_bucket_name    = "${random_string.naming.result}-rootbucket"
+  sg_egress_ports     = [443, 3306, 6666]
+  sg_ingress_protocol = ["tcp", "udp"]
+  sg_egress_protocol  = ["tcp", "udp"]
   workspace_confs = { //add more workspaces here, remove from here to delete specific workspace
     workspace_1 = var.workspace_1_config
     workspace_2 = var.workspace_2_config
   }
-  sg_egress_ports     = [443, 3306, 6666]
-  sg_ingress_protocol = ["tcp", "udp"]
-  sg_egress_protocol  = ["tcp", "udp"]
 }
 
 module "databricks_cmk" {
@@ -25,6 +25,7 @@ module "databricks_cmk" {
   cmk_admin              = var.cmk_admin
 }
 
+// for each VPC, you should create workspace_collection
 module "workspace_collection" {
   for_each = local.workspace_confs
 

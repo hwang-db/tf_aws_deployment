@@ -46,7 +46,7 @@ workspace_confs = {
 Step 4: Check your VPC and subnet CIDR, then run `terraform init` and `terraform apply` to deploy your workspaces; this will deploy multiple E2 workspaces into your VPC.
 
 
-> Folder Structure
+> Project Folder Structure
 
     .
     ├── iam.tf
@@ -74,10 +74,6 @@ Step 4: Check your VPC and subnet CIDR, then run `terraform init` and `terraform
                     ├── main.tf
                     ├── variables.tf
                     ├── outputs.tf
-
-## Private Links related steps
-
-Due to a know open issue, we need to run `terraform apply` twice and do some commenting/uncommenting during the deployment stage. 
 
 
 ## Common Actions

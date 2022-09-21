@@ -20,13 +20,15 @@ Step 2: Modify `variables.tf`, for each workspace you need to write a variable b
 
 ```terraform
 variable "workspace_1_config" {
-    default = {
-        private_subnet_pair = { subnet1_cidr = "10.109.4.0/23", subnet2_cidr = "10.109.6.0/23" }
-        workspace_name      = "test-workspace-1"
-        prefix              = "ws1"
-        region              = "ap-southeast-1"
-        root_bucket_name    = "test-workspace-1-rootbucket"
-    }
+  default = {
+    private_subnet_pair = { subnet1_cidr = "10.109.6.0/23", subnet2_cidr = "10.109.8.0/23" }
+    workspace_name      = "test-workspace-1"
+    prefix              = "ws1"
+    region              = "ap-southeast-1"
+    root_bucket_name    = "test-workspace-1-rootbucket"
+    block_list          = ["58.133.93.159"]
+    allow_list          = [] // if allow_list empty, all public IP not blocked by block_list are allowed
+  }
 }
 ```
 
@@ -77,25 +79,35 @@ Step 4: Check your VPC and subnet CIDR, then run `terraform init` and `terraform
 
 
 ## IP Access List
-For all the workspaces in this template, we are using IP access list to control access to the workspace. You can add/remove your IP address.
 
-We separate out the process of IP access list management from Terraform; instead, we programatically using curl to update the IP access list. This is because we want to keep the Terraform state file as clean as possible, and we don't want to expose the IP address in the state file.
+For all the workspaces in this template, we allowed access from the Internet, but we restrict access using IP access list. Each workspace can be customized with `allow_list` and `block_list` in variables block.
 
+The process of IP access list management is separated from Terraform process of workspace deployment. This is because we want to keep a clean cut between workspace deployment and workspace management. It is a good practice to separate workspace deployment and workspace management.
+
+After you have deployed your workspaces using this template (`aws_databricks_modular_privatelink`), you will have workspace host URLs saved as local file under `/artifacts`. Those files are for you to input to the next Terraform workspace management process, and to patch the workspace IP access list.
+
+> IP Access List Decision Flow
+
+<img src="../charts/ip-access-lists-flow.png" width="400">
+
+> Example - blocked access from workspace: my phone is blocked to access the workspace, since the public IP was in the workspace's block list.
 
 <img src="../charts/ip_access_list_block.png" width="400">
 
 
-
 ## Common Actions
 
-### To delete specific workspace
-You just need to remove the workspace config from `main.tf` - locals block, then run `terraform apply` to delete the workspace. For example, to delete workspace_1, you need to remove the following lines from `main.tf` - locals block:
+### To delete specific workspace(s)
+
+Do Not run `terraform destroy` or `terraform destroy -target` for the purpose of deleting resources. Instead, you should just remove resources from your `.tf` scripts and run `terraform apply`.
+
+You just need to remove the workspace config from `main.tf` - locals block, then run `terraform apply` to delete the workspace. For example, to delete `workspace_3`, you need to remove the following lines from `main.tf` - locals block, it is optional to remove the same from variable block in `variables.tf`:
 
 ```terraform
-workspace_1 = var.workspace_1_config
+workspace_3 = var.workspace_3_config
 ```
 
-Then run `terraform apply` to delete workspace_1.
+Then run `terraform apply`, workspace_3 will be deleted.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

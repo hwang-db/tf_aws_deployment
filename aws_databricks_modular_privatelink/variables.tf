@@ -56,8 +56,8 @@ variable "workspace_1_config" {
     prefix              = "ws1"
     region              = "ap-southeast-1"
     root_bucket_name    = "test-workspace-1-rootbucket"
-    block_list          = ["10.0.0.0"]
-    allow_list          = []
+    block_list          = ["58.133.93.159"]
+    allow_list          = [] // if allow_list empty, all public IP not blocked by block_list are allowed
   }
 }
 
@@ -68,7 +68,7 @@ variable "workspace_2_config" {
     prefix              = "ws2"
     region              = "ap-southeast-1"
     root_bucket_name    = "test-workspace-2-rootbucket"
-    block_list          = []
-    allow_list          = ["10.1.0.0"]
+    block_list          = ["54.112.179.135", "195.78.164.130"]
+    allow_list          = ["65.184.145.97"] // if allow_list empty, all public IP not blocked by block_list are allowed
   }
 }

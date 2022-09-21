@@ -3,6 +3,40 @@ AWS Databricks Multiple Workspace Deployment with KMS and Customer-managed VPC a
 
 In this example, we created modules to deploy E2 Databricks workspaces at scale. Users of this template should supply configuration variables for each workspaces and edit the locals block in `main.tf`, to deploy multiple E2 workspaces (customer-managed VPC setup). This modular design of E2 workspaces allow customer to deploy, manage and delete individual workspaces easily, with minimal set of scripts. This template takes reference (e.g. CMK module) from https://github.com/andyweaves/databricks-terraform-e2e-examples from andrew.weaver@databricks.com and adapted to specific customer requirements.
 
+## Project Folder Structure
+
+    .
+    ├── iam.tf
+    ├── ip_access_list.tf
+    ├── main.tf
+    ├── privatelink.tf
+    ├── providers.tf
+    ├── vpc.tf
+    ├── variables.tf
+    ├── outputs.tf
+    ├── artifacts        # stores workspaces URL and other info for next stage deployment
+        ├── workspace_1_deployment.json       
+        ├── ...
+    ├── modules   
+        ├── databricks_cmk
+            ├── main.tf         
+            ├── variables.tf    
+            ├── outputs.tf      
+        ├── mws_workspace
+            ├── main.tf         
+            ├── variables.tf    
+            ├── outputs.tf      
+            ├── modules
+                ├── mws_network
+                    ├── main.tf
+                    ├── variables.tf
+                    ├── outputs.tf
+                ├── mws_storage
+                    ├── main.tf
+                    ├── variables.tf
+                    ├── outputs.tf
+
+
 ## Get Started
 
 > Step 1: Clone this repo to local, set environment variables for `aws` and `databricks` providers authentication:
@@ -47,35 +81,8 @@ workspace_confs = {
 
 > Step 4: Check your VPC and subnet CIDR, then run `terraform init` and `terraform apply` to deploy your workspaces; this will deploy multiple E2 workspaces into your VPC.
 
+At this step, your workspaces deployment and VPC networking infra should have been successfully deployed. 
 
-## Project Folder Structure
-
-    .
-    ├── iam.tf
-    ├── main.tf
-    ├── privatelink.tf
-    ├── providers.tf
-    ├── vpc.tf
-    ├── variables.tf
-    ├── outputs.tf
-    ├── modules   
-        ├── databricks_cmk
-            ├── main.tf         
-            ├── variables.tf    
-            ├── outputs.tf      
-        ├── mws_workspace
-            ├── main.tf         
-            ├── variables.tf    
-            ├── outputs.tf      
-            ├── modules
-                ├── mws_network
-                    ├── main.tf
-                    ├── variables.tf
-                    ├── outputs.tf
-                ├── mws_storage
-                    ├── main.tf
-                    ├── variables.tf
-                    ├── outputs.tf
 
 
 ## IP Access List

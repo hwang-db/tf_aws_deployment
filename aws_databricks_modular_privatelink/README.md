@@ -139,7 +139,7 @@ You should create the infra for remote backend in another Terraform Project sinc
 
 <img src="../charts/tf_remote_s3_backend.png" width="800">
 
-Tips: to avoid falling into chicken and egg problem, if you want to destroy your backend infra (S3+DynamoDB) you need to follow these steps:
+Tips: If you want to destroy your backend infra (S3+DynamoDB), since your state files of S3 and backend infra are stored in that exact S3, to avoid falling into chicken and egg problem, you need to follow these steps:
 1. Comment out remote backend and migrate states to local backend
 2. Comment out all backend resources configs, run apply to get rid of them. Or you can run destroy.
 

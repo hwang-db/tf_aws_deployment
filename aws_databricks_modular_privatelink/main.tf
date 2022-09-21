@@ -6,8 +6,7 @@ resource "random_string" "naming" {
 }
 
 locals {
-  prefix              = "demo${random_string.naming.result}"
-  root_bucket_name    = "${random_string.naming.result}-rootbucket"
+  prefix              = "adi-aws-resources"
   sg_egress_ports     = [443, 3306, 6666]
   sg_ingress_protocol = ["tcp", "udp"]
   sg_egress_protocol  = ["tcp", "udp"]
@@ -38,7 +37,7 @@ module "workspace_collection" {
   source                = "./modules/mws_workspace"
   databricks_account_id = var.databricks_account_id
   credentials_id        = databricks_mws_credentials.this.credentials_id
-  prefix                = "${each.value.prefix}-${local.prefix}"
+  prefix                = each.value.prefix
   region                = each.value.region
   workspace_name        = each.value.workspace_name
   existing_vpc_id       = aws_vpc.mainvpc.id

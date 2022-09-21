@@ -53,7 +53,7 @@ variable "workspace_1_config" {
   default = {
     private_subnet_pair = { subnet1_cidr = "10.109.6.0/23", subnet2_cidr = "10.109.8.0/23" }
     workspace_name      = "test-workspace-1"
-    prefix              = "ws1"
+    prefix              = "ws1" // prefix decides subnets name
     region              = "ap-southeast-1"
     root_bucket_name    = "test-workspace-1-rootbucket"
     block_list          = ["58.133.93.159"]
@@ -65,7 +65,7 @@ variable "workspace_2_config" {
   default = {
     private_subnet_pair = { subnet1_cidr = "10.109.10.0/23", subnet2_cidr = "10.109.12.0/23" }
     workspace_name      = "test-workspace-2"
-    prefix              = "ws2"
+    prefix              = "ws2" // prefix decides subnets name
     region              = "ap-southeast-1"
     root_bucket_name    = "test-workspace-2-rootbucket"
     block_list          = ["54.112.179.135", "195.78.164.130"]

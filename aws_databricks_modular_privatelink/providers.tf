@@ -1,4 +1,4 @@
-terraform {
+terraform { // comment out the backend config and init again, to migrate states back to local backend 
   backend "s3" {
     # Replace this with your bucket name!
     bucket = "terraform-up-and-running-state-unique"

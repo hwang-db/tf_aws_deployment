@@ -1,13 +1,17 @@
-Deploy Multiple AWS Databricks Workspace with KMS, Customer-managed VPC, Private Links, IP Access Lists
+Deploy Multiple AWS Databricks Workspace with CMK, Customer-managed VPC, Private Links, IP Access Lists
 =========================
 
 In this example, we created modules and root level template to deploy multiple (e.g. 10+) E2 Databricks workspaces at scale easily. Users of this template minimally should do these:
 1. Supply credentials (aws+databricks) and configuration variables for each workspaces 
-2. Edit the locals block in `main.tf`
+2. Edit the locals block in `main.tf` to decide what & how many workspaces to deploy
 3. Run `terraform init` and `terraform apply` to deploy 1 or more workspaces into your VPC.
 4. Optionally, take the outputs files in `/artifacts` and patch each workspace with IP Access List.
    
 This modular design also allows customer to deploy, manage and delete `individual` workspace(s) easily, with minimal configuration needed. This template takes heavy reference (e.g. CMK module + Private Links) from https://github.com/andyweaves/databricks-terraform-e2e-examples from andrew.weaver@databricks.com and this repo is adapted to meet specific customer requirements.
+
+## Architecture
+
+> To be added - LucidChart brewing...
 
 ## Project Folder Structure
 
@@ -56,7 +60,7 @@ export AWS_ACCESS_KEY_ID=your_aws_role_access_key_id
 export AWS_SECRET_ACCESS_KEY=your_aws_role_secret_access_key
 ```
 
-> Step 2: Modify `variables.tf`, for each workspace you need to write a variable block like this:
+> Step 2: Modify `variables.tf`, for each workspace you need to write a variable block like this, all attributes are required:
 
 ```terraform
 variable "workspace_1_config" {
@@ -87,8 +91,7 @@ workspace_confs = {
 
 > Step 4: Check your VPC and subnet CIDR, then run `terraform init` and `terraform apply` to deploy your workspaces; this will deploy multiple E2 workspaces into your VPC.
 
-At this step, your workspaces deployment and VPC networking infra should have been successfully deployed. 
-
+At this step, your workspaces deployment and VPC networking infra should have been successfully deployed and you will have `n` config json files for `n` workspaces deployed, under `/artifacts` folder, to be used in another Terraform project to deploy workspace objects including IP Access List. 
 
 
 ## IP Access List
@@ -98,7 +101,7 @@ For all the workspaces in this template, we allowed access from the Internet, bu
 The process of IP access list management is separated from Terraform process of workspace deployment. This is because we want:
 1. To keep a clean cut between workspace deployment and workspace management. 
 2. It is general good practice to separate workspace deployment and workspace management. 
-3. To keep workspace objects deployment in separate terraform project, not to risk leaving orphaned resources (e.g. changed provider etc).
+3. To keep workspace objects deployment in separate terraform project, not to risk leaving orphaned resources and ruins your workspace deployment (e.g. changed provider etc).
 
 After you have deployed your workspaces using this template (`aws_databricks_modular_privatelink`), you will have workspace host URLs saved as local file under `/artifacts`. Those files are for you to input to the next Terraform workspace management process, and to patch the workspace IP access list.
 
@@ -113,6 +116,9 @@ After you have deployed your workspaces using this template (`aws_databricks_mod
 > Recommended to keep IP Access List management in a separate Terraform project, to avoid orphaned resources. (Similar error below)
 
 <img src="../charts/orphaned_resources.png" width="800">
+
+## Terraform States Files stored in remote S3
+> We recommend using remote storage, like S3, for state storage, instead of using default local backend.
 
 
 

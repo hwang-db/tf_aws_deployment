@@ -118,9 +118,26 @@ After you have deployed your workspaces using this template (`aws_databricks_mod
 <img src="../charts/orphaned_resources.png" width="800">
 
 ## Terraform States Files stored in remote S3
-> We recommend using remote storage, like S3, for state storage, instead of using default local backend.
+We recommend using remote storage, like S3, for state storage, instead of using default local backend. If you have already applied and retains state files locally, you can also configure s3 backend then apply, it will copy the local state file content into remote S3 state file, and then you can observe the local state file will become empty. Terraform will be able to read and write to s3 backend for state file updates.
 
+```terraform
+terraform {
+  backend "s3" {
+    # Replace this with your bucket name!
+    bucket = "terraform-up-and-running-state-unique-hwang"
+    key    = "global/s3/terraform.tfstate"
+    region = "ap-southeast-1"
+    # Replace this with your DynamoDB table name!
+    dynamodb_table = "terraform-up-and-running-locks"
+    encrypt        = true
+  }
+}
+```
 
+Steps to do for destroying resources with remote backend:
+1. Remove the terraform backend config
+2. Run terraform apply, migrate to using local backend
+3. Comment out all backend resources configs, run apply to get rid of them.
 
 ## Common Actions
 

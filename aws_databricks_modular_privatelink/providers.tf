@@ -1,4 +1,13 @@
 terraform {
+  backend "s3" {
+    # Replace this with your bucket name!
+    bucket = "terraform-up-and-running-state-unique"
+    key    = "global/s3-databricks-project/terraform.tfstate"
+    region = "ap-southeast-1"
+    # Replace this with your DynamoDB table name!
+    dynamodb_table = "terraform-up-and-running-locks-hwang"
+    encrypt        = true
+  }
   required_providers {
     databricks = {
       source = "databricks/databricks"

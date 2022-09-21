@@ -135,14 +135,13 @@ terraform {
 }
 ```
 
+You should create the infra for remote backend in another Terraform Project since we want to separate the backend infra out from any databricks project infra. As shown below, you create a separate set of tf scripts and create the S3 and DynamoDB Table. Then all other tf projects can store their state files in this remote backend.
+
 <img src="../charts/tf_remote_s3_backend.png" width="800">
 
-
-
-Steps to do for destroying resources with remote backend:
-1. Remove the terraform backend config
-2. Run terraform apply, migrate to using local backend
-3. Comment out all backend resources configs, run apply to get rid of them.
+Tips: to avoid falling into chicken and egg problem, if you want to destroy your backend infra (S3+DynamoDB) you need to follow these steps:
+1. Comment out remote backend and migrate states to local backend
+2. Comment out all backend resources configs, run apply to get rid of them. Or you can run destroy.
 
 ## Common Actions
 

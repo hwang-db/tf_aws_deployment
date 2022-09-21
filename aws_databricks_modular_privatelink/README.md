@@ -5,7 +5,7 @@ In this example, we created modules to deploy E2 Databricks workspaces at scale.
 
 ## Get Started
 
-Step 1: Clone this repo to local, set environment variables for `aws` and `databricks` providers authentication:
+> Step 1: Clone this repo to local, set environment variables for `aws` and `databricks` providers authentication:
     
 ```bash
 export TF_VAR_databricks_account_username=your_username
@@ -16,7 +16,7 @@ export AWS_ACCESS_KEY_ID=your_aws_role_access_key_id
 export AWS_SECRET_ACCESS_KEY=your_aws_role_secret_access_key
 ```
 
-Step 2: Modify `variables.tf`, for each workspace you need to write a variable block like this:
+> Step 2: Modify `variables.tf`, for each workspace you need to write a variable block like this:
 
 ```terraform
 variable "workspace_1_config" {
@@ -35,7 +35,7 @@ variable "workspace_1_config" {
 Since we are using CMK (customer managed key) for encryption on root S3 bucket and Databricks managed resources, you also need to provide an AWS IAM ARN for `cmk_admin`. The format will be: `arn:aws:iam::123456:user/xxx`. You need to create this user and assign KMS admin role to it.
 
 
-Step 3: Modify `main.tf` - locals block, add/remove your workspace config var inside locals, like this:
+> Step 3: Modify `main.tf` - locals block, add/remove your workspace config var inside locals, like this:
 
 ```terraform
 workspace_confs = {
@@ -45,10 +45,10 @@ workspace_confs = {
 }
 ```
 
-Step 4: Check your VPC and subnet CIDR, then run `terraform init` and `terraform apply` to deploy your workspaces; this will deploy multiple E2 workspaces into your VPC.
+> Step 4: Check your VPC and subnet CIDR, then run `terraform init` and `terraform apply` to deploy your workspaces; this will deploy multiple E2 workspaces into your VPC.
 
 
-> Project Folder Structure
+## Project Folder Structure
 
     .
     ├── iam.tf

@@ -23,12 +23,3 @@ provider "databricks" {
   password  = var.databricks_account_password
   auth_type = "basic"
 }
-
-// initialize provider in normal mode
-/*
-provider "databricks" {
-  // in normal scenario you won't have to give providers aliases
-  alias = "created_workspace"
-  host  = module.workspace1.workspace_url
-}
-*/

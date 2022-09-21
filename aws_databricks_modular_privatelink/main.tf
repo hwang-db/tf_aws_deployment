@@ -17,6 +17,7 @@ locals {
   }
 }
 
+
 module "databricks_cmk" {
   source                 = "./modules/databricks_cmk"
   cross_account_role_arn = aws_iam_role.cross_account_role.arn
@@ -56,12 +57,15 @@ module "workspace_collection" {
   ]
 }
 
-
-/*
-// create PAT token to provision entities within workspace
-resource "databricks_token" "pat" {
-  provider         = databricks.created_workspace
-  comment          = "Terraform Provisioning"
-  lifetime_seconds = 86400
+// save deployment info to local file for future configuration
+resource "local_file" "deployment_information" {
+  for_each = local.workspace_confs
+  content = jsonencode({
+    "prefix"              = "${local.workspace_confs[each.key].prefix}-${local.prefix}"
+    "workspace_url"       = module.workspace_collection[each.key].workspace_url
+    "workspace_admin_pat" = "testval_pat"
+    "block_list"          = "${local.workspace_confs[each.key].block_list}"
+    "allow_list"          = "${local.workspace_confs[each.key].allow_list}"
+  })
+  filename = "./artifacts/${each.key}_deployment_info.json"
 }
-*/

@@ -76,6 +76,16 @@ Step 4: Check your VPC and subnet CIDR, then run `terraform init` and `terraform
                     ├── outputs.tf
 
 
+## IP Access List
+For all the workspaces in this template, we are using IP access list to control access to the workspace. You can add/remove your IP address.
+
+We separate out the process of IP access list management from Terraform; instead, we programatically using curl to update the IP access list. This is because we want to keep the Terraform state file as clean as possible, and we don't want to expose the IP address in the state file.
+
+
+<img src="../charts/ip_access_list_block.png" width="800">
+
+
+
 ## Common Actions
 
 ### To delete specific workspace

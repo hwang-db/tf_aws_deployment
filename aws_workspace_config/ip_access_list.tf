@@ -1,7 +1,7 @@
 provider "databricks" {
   alias = "created_workspace"
   host  = "https://dbc-fc3b108a-8866.cloud.databricks.com"
-  token = "yourtoken"
+  token = "/"
 }
 
 resource "databricks_workspace_conf" "this" {

@@ -1,7 +1,13 @@
-AWS Databricks Multiple Workspace Deployment with KMS and Customer-managed VPC at scale
+Deploy Multiple AWS Databricks Workspace with KMS, Customer-managed VPC, Private Links, IP Access Lists
 =========================
 
-In this example, we created modules to deploy E2 Databricks workspaces at scale. Users of this template should supply configuration variables for each workspaces and edit the locals block in `main.tf`, to deploy multiple E2 workspaces (customer-managed VPC setup). This modular design of E2 workspaces allow customer to deploy, manage and delete individual workspaces easily, with minimal set of scripts. This template takes reference (e.g. CMK module) from https://github.com/andyweaves/databricks-terraform-e2e-examples from andrew.weaver@databricks.com and adapted to specific customer requirements.
+In this example, we created modules and root level template to deploy multiple (e.g. 10+) E2 Databricks workspaces at scale easily. Users of this template minimally should do these:
+1. Supply credentials (aws+databricks) and configuration variables for each workspaces 
+2. Edit the locals block in `main.tf`
+3. Run `terraform init` and `terraform apply` to deploy 1 or more workspaces into your VPC.
+4. Optionally, take the outputs files in `/artifacts` and patch each workspace with IP Access List.
+   
+This modular design also allows customer to deploy, manage and delete `individual` workspace(s) easily, with minimal configuration needed. This template takes heavy reference (e.g. CMK module + Private Links) from https://github.com/andyweaves/databricks-terraform-e2e-examples from andrew.weaver@databricks.com and this repo is adapted to meet specific customer requirements.
 
 ## Project Folder Structure
 
@@ -89,7 +95,10 @@ At this step, your workspaces deployment and VPC networking infra should have be
 
 For all the workspaces in this template, we allowed access from the Internet, but we restrict access using IP access list. Each workspace can be customized with `allow_list` and `block_list` in variables block.
 
-The process of IP access list management is separated from Terraform process of workspace deployment. This is because we want to keep a clean cut between workspace deployment and workspace management. It is a good practice to separate workspace deployment and workspace management.
+The process of IP access list management is separated from Terraform process of workspace deployment. This is because we want:
+1. To keep a clean cut between workspace deployment and workspace management. 
+2. It is general good practice to separate workspace deployment and workspace management. 
+3. To keep workspace objects deployment in separate terraform project, not to risk leaving orphaned resources (e.g. changed provider etc).
 
 After you have deployed your workspaces using this template (`aws_databricks_modular_privatelink`), you will have workspace host URLs saved as local file under `/artifacts`. Those files are for you to input to the next Terraform workspace management process, and to patch the workspace IP access list.
 
@@ -100,6 +109,11 @@ After you have deployed your workspaces using this template (`aws_databricks_mod
 > Example - blocked access from workspace: my phone is blocked to access the workspace, since the public IP was in the workspace's block list.
 
 <img src="../charts/ip_access_list_block.png" width="400">
+
+> Recommended to keep IP Access List management in a separate Terraform project, to avoid orphaned resources. (Similar error below)
+
+<img src="../charts/orphaned_resources.png" width="800">
+
 
 
 ## Common Actions

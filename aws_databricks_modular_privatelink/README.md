@@ -75,7 +75,7 @@ variable "workspace_1_config" {
     allow_list          = [] // if allow_list empty, all public IP not blocked by block_list are allowed
     tags = {
       "Name" = "test-workspace-1-tags",
-      "Env"  = "test-ws-1" // add more tags if needed, tags will be applied on databricks subnets, but workspace objects like clusters tag needs to be defined in workspace config elsewhere
+      "Env"  = "test-ws-1" // add more tags if needed, tags will be applied on databricks subnets and root s3 bucket, but workspace objects like clusters tag needs to be defined in workspace config elsewhere
     }
   }
 }

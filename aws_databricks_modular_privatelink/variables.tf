@@ -59,7 +59,8 @@ variable "workspace_1_config" {
     block_list          = ["58.133.93.159"]
     allow_list          = [] // if allow_list empty, all public IP not blocked by block_list are allowed
     tags = {
-      "Name" = "test-workspace-1-tags"
+      "Name" = "test-workspace-1-tags",
+      "Env"  = "test-ws-1"
     }
   }
 }

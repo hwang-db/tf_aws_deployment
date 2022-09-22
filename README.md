@@ -1,5 +1,4 @@
-# tf_aws_deployment
-Terraform patterns for aws deployments and aws Databricks
+# Terraform patterns for AWS Databricks deployments
 
 Subdirectories are independent to each other, each represents a Terraform pattern of AWS Databricks workspace deployment.
 

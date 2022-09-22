@@ -21,7 +21,6 @@ resource "aws_subnet" "public_subnets" {
   tags = merge(var.tags, {
     Name = "${local.prefix}-${aws_vpc.mainvpc.id}-public-subnet"
   })
-
 }
 
 

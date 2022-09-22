@@ -17,21 +17,22 @@ This modular design also allows customer to deploy, manage and delete `individua
 
     .
     ├── iam.tf
-    ├── ip_access_list.tf
     ├── main.tf
+    ├── outputs.tf
     ├── privatelink.tf
     ├── providers.tf
-    ├── vpc.tf
     ├── variables.tf
-    ├── outputs.tf
+    ├── vpc.tf
     ├── artifacts        # stores workspaces URL and other info for next stage deployment
         ├── workspace_1_deployment.json       
         ├── ...
     ├── modules   
         ├── databricks_cmk
+            ├── data.tf
             ├── main.tf         
-            ├── variables.tf    
             ├── outputs.tf      
+            ├── providers.tf
+            ├── variables.tf    
         ├── mws_workspace
             ├── main.tf         
             ├── variables.tf    
@@ -124,7 +125,7 @@ After you have deployed your workspaces using this template (`aws_databricks_mod
 
 
 ## Terraform States Files stored in remote S3
-We recommend using remote storage, like S3, for state storage, instead of using default local backend. If you have already applied and retains state files locally, you can also configure s3 backend then apply, it will copy the local state file content into remote S3 state file, and then you can observe the local state file will become empty. Terraform will be able to read and write to s3 backend for state file updates.
+We recommend using remote storage, like S3, for state storage, instead of using default local backend. If you have already applied and retains state files locally, you can also configure s3 backend then apply, it will migrate local state file content into S3 bucket, then local state file will become empty. As you switch the backends, state files are migrated from `A` to `B`. 
 
 ```terraform
 terraform {
@@ -140,7 +141,7 @@ terraform {
 }
 ```
 
-You should create the infra for remote backend in another Terraform Project since we want to separate the backend infra out from any databricks project infra. As shown below, you create a separate set of tf scripts and create the S3 and DynamoDB Table. Then all other tf projects can store their state files in this remote backend.
+You should create the infra for remote backend in another Terraform Project, like the `aws_remote_backend_infra` project in this repo's root level - https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_remote_backend_infra, since we want to separate the backend infra out from any databricks project infra. As shown below, you create a separate set of tf scripts and create the S3 and DynamoDB Table. Then all other tf projects can store their state files in this remote backend.
 
 <img src="../charts/tf_remote_s3_backend.png" width="800">
 

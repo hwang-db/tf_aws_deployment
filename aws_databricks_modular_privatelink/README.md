@@ -95,6 +95,9 @@ In the default setting, this template creates one VPC (with one public subnet an
 
 At this step, your workspaces deployment and VPC networking infra should have been successfully deployed and you will have `n` config json files for `n` workspaces deployed, under `/artifacts` folder, to be used in another Terraform project to deploy workspace objects including IP Access List. 
 
+## Private Links
+
+In this example, we used 1 VPC for all workspaces, and we used backend VPCE for Databricks clusters to communicate with control plane. All workspaces deployed into the same VPC will share one pair of VPCEs (onr for relay, one for rest api), typically since VPCEs can provide considerable bandwidth, you just need one such pair of VPCEs for all workspaces in each region. For HA setup, you can build VPCEs into multiple az as well. 
 
 ## IP Access List
 

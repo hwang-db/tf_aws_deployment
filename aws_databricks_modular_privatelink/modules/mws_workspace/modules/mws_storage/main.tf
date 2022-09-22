@@ -5,6 +5,7 @@ resource "aws_s3_bucket" "root_storage_bucket" {
     enabled = false
   }
   force_destroy = true
+  tags          = var.tags
 }
 
 resource "aws_s3_bucket_public_access_block" "root_storage_bucket" {

@@ -92,6 +92,8 @@ workspace_confs = {
 
 > Step 4: Check your VPC and subnet CIDR, then run `terraform init` and `terraform apply` to deploy your workspaces; this will deploy multiple E2 workspaces into your VPC.
 
+We are calling the module `mws_workspace` to create multiple workspaces by batch, you should treat this concept as a group of workspaces that share the same VPC in a region. If you want to deploy workspaces in different VPCs, you need to create multiple `mws_workspace` instances. 
+
 In the default setting, this template creates one VPC (with one public subnet and one private subnet for hosting VPCEs). Each incoming workspace will add 2 private subnets into this VPC. If you need to create multiple VPCs, you should copy paste the VPC configs and change accordingly, or you can wrap VPC configs into a module, we leave this to you. 
 
 At this step, your workspaces deployment and VPC networking infra should have been successfully deployed and you will have `n` config json files for `n` workspaces deployed, under `/artifacts` folder, to be used in another Terraform project to deploy workspace objects including IP Access List. 

@@ -9,3 +9,7 @@ variable "root_bucket_name" {
 variable "region" {
   type = string
 }
+
+variable "tags" {
+  type = map(string)
+}

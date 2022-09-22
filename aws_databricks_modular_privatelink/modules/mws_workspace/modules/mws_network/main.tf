@@ -8,9 +8,7 @@ resource "aws_subnet" "private_subnets" {
   availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = false
 
-  tags = {
-    Name = "${var.prefix}-subnet-${count.index}"
-  }
+  tags = var.tags
 }
 
 # Private route table
@@ -22,6 +20,7 @@ resource "aws_route_table" "private_route_tables" {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = var.aws_nat_gateway_id
   }
+  tags = var.tags
 }
 
 # Private route table association

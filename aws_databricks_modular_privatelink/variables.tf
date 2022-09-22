@@ -58,6 +58,9 @@ variable "workspace_1_config" {
     root_bucket_name    = "test-workspace-1-rootbucket"
     block_list          = ["58.133.93.159"]
     allow_list          = [] // if allow_list empty, all public IP not blocked by block_list are allowed
+    tags = {
+      "Name" = "test-workspace-1-tags"
+    }
   }
 }
 
@@ -70,5 +73,8 @@ variable "workspace_2_config" {
     root_bucket_name    = "test-workspace-2-rootbucket"
     block_list          = ["54.112.179.135", "195.78.164.130"]
     allow_list          = ["65.184.145.97"] // if allow_list empty, all public IP not blocked by block_list are allowed
+    tags = {
+      "Name" = "test-workspace-2-tags"
+    }
   }
 }

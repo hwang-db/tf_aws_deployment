@@ -40,6 +40,7 @@ module "workspace_collection" {
   prefix                = each.value.prefix
   region                = each.value.region
   workspace_name        = each.value.workspace_name
+  tags                  = each.value.tags
   existing_vpc_id       = aws_vpc.mainvpc.id
   nat_gateways_id       = aws_nat_gateway.nat_gateways[0].id
   security_group_ids    = [aws_security_group.sg.id]
@@ -49,7 +50,6 @@ module "workspace_collection" {
   root_bucket_name      = each.value.root_bucket_name
   relay_vpce_id         = [databricks_mws_vpc_endpoint.relay.vpc_endpoint_id]
   rest_vpce_id          = [databricks_mws_vpc_endpoint.backend_rest_vpce.vpc_endpoint_id]
-
   depends_on = [
     databricks_mws_vpc_endpoint.relay,
     databricks_mws_vpc_endpoint.backend_rest_vpce

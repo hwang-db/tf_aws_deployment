@@ -9,6 +9,7 @@ module "my_mws_network" {
   prefix                = "${var.prefix}-network"
   relay_vpce_id         = var.relay_vpce_id
   rest_vpce_id          = var.rest_vpce_id
+  tags                  = var.tags
 }
 
 module "my_root_bucket" {
@@ -16,6 +17,7 @@ module "my_root_bucket" {
   databricks_account_id = var.databricks_account_id
   region                = var.region
   root_bucket_name      = var.root_bucket_name
+  tags                  = var.tags
 }
 
 resource "databricks_mws_customer_managed_keys" "workspace_storage" {

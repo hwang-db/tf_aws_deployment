@@ -128,6 +128,7 @@ After you have deployed your workspaces using this template (`aws_databricks_mod
 > Recommended to keep IP Access List management in a separate Terraform project, to avoid orphaned resources. (Similar error below)
 
 <img src="../charts/orphaned_resources.png" width="800">
+
 ## Tagging
 
 We added custom tagging options in `variables.tf` to tag your aws resources: in each workspace's config variable map, you can supply with any number of tags, and these tags will propagate down to resources related to that workspace, like root bucket s3 and the 2 subnets. Note that aws databricks itself does not support tagging, also the abstract layer of `storage_configuration`, and `network_configuration` does not support tagging. Instead, if you need to tag/enforce certain tags for `clusters` and `pools`, do it in `workspace management` terraform projects, (not this directory that deploys workspaces).

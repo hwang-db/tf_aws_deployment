@@ -128,11 +128,9 @@ After you have deployed your workspaces using this template (`aws_databricks_mod
 > Recommended to keep IP Access List management in a separate Terraform project, to avoid orphaned resources. (Similar error below)
 
 <img src="../charts/orphaned_resources.png" width="800">
-
 ## Tagging
 
-We added custom tagging options in `variables.tf` to tag your aws resources: in each workspace's config variable map, you can supply with any number of tags, and these tags will propagate down to resources related to that workspace, like root bucket s3 and the 2 subnets. Note that aws databricks itself does not support tagging, also the abstract layer of `storage_configuration`, and `network_configuration` does not support tagging. Instead, if you need to tag/enforce certain tags for `clusters` and `pools`, do it in `workspace management` terraform projects, (not this directory that deploysld workspaces).
-
+We added custom tagging options in `variables.tf` to tag your aws resources: in each workspace's config variable map, you can supply with any number of tags, and these tags will propagate down to resources related to that workspace, like root bucket s3 and the 2 subnets. Note that aws databricks itself does not support tagging, also the abstract layer of `storage_configuration`, and `network_configuration` does not support tagging. Instead, if you need to tag/enforce certain tags for `clusters` and `pools`, do it in `workspace management` terraform projects, (not this directory that deploys workspaces).
 ## Terraform States Files stored in remote S3
 We recommend using remote storage, like S3, for state storage, instead of using default local backend. If you have already applied and retains state files locally, you can also configure s3 backend then apply, it will migrate local state file content into S3 bucket, then local state file will become empty. As you switch the backends, state files are migrated from `A` to `B`. 
 
@@ -157,9 +155,11 @@ You should create the infra for remote backend in another Terraform Project, lik
 Tips: If you want to destroy your backend infra (S3+DynamoDB), since your state files of S3 and backend infra are stored in that exact S3, to avoid falling into chicken and egg problem, you need to follow these steps:
 1. Comment out remote backend and migrate states to local backend
 2. Comment out all backend resources configs, run apply to get rid of them. Or you can run destroy.
-
 ## Common Actions
+### To add specific workspace(s)
 
+You just need to supply with each workspace's configuration in root level `variables.tf`, similar to the examples given.
+Then you need to add the workspaces you want into locals block and run apply.
 ### To delete specific workspace(s)
 
 Do Not run `terraform destroy` or `terraform destroy -target` for the purpose of deleting resources. Instead, you should just remove resources from your `.tf` scripts and run `terraform apply`.
@@ -171,6 +171,7 @@ workspace_3 = var.workspace_3_config
 ```
 
 Then run `terraform apply`, workspace_3 will be deleted.
+
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

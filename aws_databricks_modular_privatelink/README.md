@@ -129,6 +129,9 @@ After you have deployed your workspaces using this template (`aws_databricks_mod
 
 <img src="../charts/orphaned_resources.png" width="800">
 
+## Tagging
+
+We added custom tagging options in `variables.tf` to tag your aws resources: in each workspace's config variable map, you can supply with any number of tags, and these tags will propagate down to resources related to that workspace, like root bucket s3 and the 2 subnets. Note that aws databricks itself does not support tagging, also the abstract layer of `storage_configuration`, and `network_configuration` does not support tagging. Instead, if you need to tag/enforce certain tags for `clusters` and `pools`, do it in `workspace management` terraform projects, (not this directory that deploysld workspaces).
 
 ## Terraform States Files stored in remote S3
 We recommend using remote storage, like S3, for state storage, instead of using default local backend. If you have already applied and retains state files locally, you can also configure s3 backend then apply, it will migrate local state file content into S3 bucket, then local state file will become empty. As you switch the backends, state files are migrated from `A` to `B`. 

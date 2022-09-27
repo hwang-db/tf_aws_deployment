@@ -1,4 +1,4 @@
-Using S3 as remote backend for Terraform state files
+S3 bucket remote backend for Terraform state files
 =========================
 
 In this example, we show how to use S3 bucket as a remote backend for Terraform project's state files. Two major reasons that you should use remote backend instead of default local backend are:
@@ -28,4 +28,4 @@ To properly destroy remote backend infra, you need to migrate the state files to
 
 ### Other projects to use this remote backend
 
-You only need to configure the same terraform backend block in other terraform projects, to let them use the same remote backend. 
+You only need to configure the same terraform backend block in other terraform projects, to let them use the same remote backend. Inside the backend configs, you need to design the `key` in your bucket to be unique for each project.

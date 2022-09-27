@@ -1,25 +1,20 @@
 provider "aws" {
-  region = "ap-southeast-1"
+  region = var.region
 }
 
 terraform {
-  /*
   backend "s3" {
-    # Replace this with your bucket name!
-    bucket = "terraform-up-and-running-state-unique"
-    key    = "global/s3/terraform.tfstate"
-    region = "ap-southeast-1"
-    # Replace this with your DynamoDB table name!
-    dynamodb_table = "terraform-up-and-running-locks-hwang"
+    bucket         = "tf-backend-bucket-hwang" # Replace this with your bucket name!
+    key            = "global/s3/terraform.tfstate"
+    region         = "ap-southeast-1"
+    dynamodb_table = "tf-backend-dynamodb-hwang" # Replace this with your DynamoDB table name!
     encrypt        = true
   }
-*/
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "terraform-up-and-running-state-unique"
-  # Enable versioning so we can see the full revision history of our
-  # state files
+  bucket = var.bucket_name
+  # Enable versioning so we can see the full revision history of state files
   versioning {
     enabled = true
   }
@@ -35,7 +30,7 @@ resource "aws_s3_bucket" "terraform_state" {
 }
 
 resource "aws_dynamodb_table" "terraform_locks" {
-  name         = "terraform-up-and-running-locks-hwang"
+  name         = var.dynamodb_table
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
   attribute {

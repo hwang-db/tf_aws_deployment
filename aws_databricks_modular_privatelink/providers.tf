@@ -1,13 +1,12 @@
-terraform { // comment out the backend config and init again, to migrate states back to local backend 
+terraform {
   backend "s3" {
-    # Replace this with your bucket name!
-    bucket = "terraform-up-and-running-state-unique"
-    key    = "global/s3-databricks-project/terraform.tfstate"
-    region = "ap-southeast-1"
-    # Replace this with your DynamoDB table name!
-    dynamodb_table = "terraform-up-and-running-locks-hwang"
+    bucket         = "tf-backend-bucket-haowang" # Replace this with your bucket name!
+    key            = "global/s3-databricks-project/terraform.tfstate"
+    region         = "ap-southeast-1"
+    dynamodb_table = "tf-backend-dynamodb-databricks-project" # Replace this with your DynamoDB table name!
     encrypt        = true
   }
+
   required_providers {
     databricks = {
       source = "databricks/databricks"
@@ -17,10 +16,10 @@ terraform { // comment out the backend config and init again, to migrate states 
       version = "~> 4.0"
     }
   }
+
 }
 
 provider "aws" {
-  // provider configuration
   region = var.region
 }
 

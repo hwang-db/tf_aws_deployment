@@ -59,11 +59,12 @@ module "workspace_collection" {
 // save deployment info to local file for future configuration
 resource "local_file" "deployment_information" {
   for_each = local.workspace_confs
+
   content = jsonencode({
     "prefix"        = "${local.workspace_confs[each.key].prefix}-${local.prefix}"
     "workspace_url" = module.workspace_collection[each.key].workspace_url
     "block_list"    = "${local.workspace_confs[each.key].block_list}"
     "allow_list"    = "${local.workspace_confs[each.key].allow_list}"
   })
-  filename = "./artifacts/${each.key}_info.json"
+  filename = "./artifacts/${each.key}.json"
 }

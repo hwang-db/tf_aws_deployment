@@ -5,3 +5,18 @@ variable "allow_list" {
 variable "block_list" {
   type = list(string)
 }
+
+variable "allow_list_label" {
+  type    = string
+  default = "Allow List"
+}
+
+variable "deny_list_label" {
+  type    = string
+  default = "Deny List"
+}
+
+variable "host_ip_allow_label" {
+  type    = string
+  default = "Host Machine's IP to be allowed"
+}

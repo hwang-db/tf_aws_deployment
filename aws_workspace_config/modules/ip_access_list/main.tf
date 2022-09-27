@@ -18,7 +18,7 @@ data "http" "my" {
 }
 
 resource "databricks_ip_access_list" "current_machine_ip" {
-  label        = "${data.http.my.body} is allowed to access workspace"
+  label        = var.host_ip_allow_label
   list_type    = "ALLOW"
   ip_addresses = ["${data.http.my.body}/32"]
   depends_on   = [databricks_workspace_conf.this]
@@ -26,14 +26,14 @@ resource "databricks_ip_access_list" "current_machine_ip" {
 
 
 resource "databricks_ip_access_list" "allow-list" {
-  label        = "allow-list for testing"
+  label        = var.allow_list_label
   list_type    = "ALLOW"
   ip_addresses = var.allow_list
   depends_on   = [databricks_workspace_conf.this]
 }
 
 resource "databricks_ip_access_list" "block-list" {
-  label        = "block-list for testing"
+  label        = var.deny_list_label
   list_type    = "BLOCK"
   ip_addresses = var.block_list
   depends_on   = [databricks_workspace_conf.this]

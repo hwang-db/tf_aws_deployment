@@ -45,7 +45,9 @@ We show how to create cluster from terraform `clusters.tf`. You can also create 
 
 ### Cluster Policy Management
 
-[Tagging from cluster policy](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/cluster_policy)
+We show a base policy module under `modules/base_policy`, using this you can supply with your custom rules into the policy, assign the permission to use the policy to different groups.
+
+Within the json definition of policy you can do things like tag enforcement, read this for details: [Tagging from cluster policy](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/cluster_policy)
 
 By defining in the cluster policy json like below, you can enforce default tags from policy:
 
@@ -57,6 +59,8 @@ By defining in the cluster policy json like below, you can enforce default tags 
 <img src="../charts/tf_tagging.png" width="600">
 
 Ordinary (non-admin) users, by default will not be able to create unrestricted clusters; if allowed to create clusters, they will only be able to use the policies assigned to them to spin up clusters, thus you can have strict control over the cluster configurations among different groups. See below for and example of ordinary user created via terraform.
+
+The process will be: provision ordinary users -> assign users to groups -> assign groups to have permissions to use specific policies only -> the groups can only create clusters using assigned policies.
 
 <img src="../charts/user_policy.png" width="1200">
 

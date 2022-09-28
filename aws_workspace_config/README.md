@@ -3,6 +3,13 @@ AWS Databricks workspace management using Terraform
 
 This directory shows how to use terraform to manage workspace configurations, objects (like clusters, policies etc). We attempt to balance between configuration code complexity and flexibility. The goal is to provide a simple way to manage workspace configurations and objects, while allowing for maximum customization and governance.
 
+Specifically, you can find examples here for:
+1. [Multiple instances of providers management](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#provider-configurations-for-multiple-workspaces)
+2. [Configure IP Access Lists](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#configure-ip-access-list-for-multiple-workspaces)
+3. [Deploy workspace objects](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#workspace-object-management)
+4. [Configure cluster policies and restrict users to use only certain policies](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#cluster-policy-management)
+5. [Provision workspace users/groups]()
+
 ### Provider configurations for multiple workspaces
 
 Read this tutorial: https://www.terraform.io/language/modules/develop/providers
@@ -54,3 +61,6 @@ Ordinary (non-admin) users, by default will not be able to create unrestricted c
 
 <img src="../charts/user_policy.png" width="1200">
 
+
+### Workspace users and groups
+test

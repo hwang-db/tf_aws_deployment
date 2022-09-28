@@ -45,16 +45,15 @@ resource "databricks_group" "this" {
   allow_instance_pool_create = true
 }
 
-data "databricks_user" "this" { // using data because i'm adding the existing user into this group
+data "databricks_user" "this" { // using data to add the existing user into group
   provider  = databricks.ws1
   user_name = "goinfrerie@gmail.com"
 }
 
-resource "databricks_user" "user2" {
+resource "databricks_user" "user2" { // ordinary user, non-admin
   provider  = databricks.ws1
   user_name = "hao.wang@databricks.com"
 }
-
 
 resource "databricks_group_member" "vip_member" {
   provider  = databricks.ws1

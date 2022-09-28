@@ -11,12 +11,12 @@ Specifically, you can find examples here for:
 4. [Cluster Policy Management](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#cluster-policy-management)
 5. [Workspace users and groups](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#workspace-users-and-groups)
 
-### Provider configurations for multiple workspaces
+## Provider configurations for multiple workspaces
 
 If you want to manage multiple databricks workspaces using the same terraform project (folder), you must specify different provider configurations for each workspace. Examples can be found in `providers.tf`.
 When you spin up resources/modules, you need to explicitly pass in the provider information for each instance of module, such that terraform knows which workspace host to deploy the resources into; read this tutorial for details: https://www.terraform.io/language/modules/develop/providers
 
-### Configure IP Access List for multiple workspaces
+## Configure IP Access List for multiple workspaces
 
 In this example, we show how to patch multiple workspaces using multiple json files as input; the json file contains block lists and allow lists for each workspace and we use the exact json files generated in workspace deployment template inside this repo, see this [[link](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_databricks_modular_privatelink#ip-access-list)] for more details.
 
@@ -40,11 +40,11 @@ Note that we also passed in the labels, this is to prevent strange errors when d
 
 About the Host Machine's IP - in the generated json file, we had automatically added the host (the machine that runs this terraform script) public IP into the allow list (this is required by the IP access list feature).
 
-### Workspace Object Management
+## Workspace Object Management
 
 We show how to create cluster from terraform `clusters.tf`. You can also create other objects like jobs, policies, permissions, users, groups etc.
 
-### Cluster Policy Management
+## Cluster Policy Management
 
 We show a base policy module under `modules/base_policy`, using this you can supply with your custom rules into the policy, assign the permission to use the policy to different groups.
 
@@ -65,7 +65,7 @@ The process will be: provision ordinary users -> assign users to groups -> assig
 
 <img src="../charts/user_policy.png" width="1200">
 
-### Workspace users and groups
+## Workspace users and groups
 
 You can manage users/groups inside terraform. Examples were given in `main.tf`. Note that with Unity Catalog, you can have account level users/groups. The example here is at workspace level.
 

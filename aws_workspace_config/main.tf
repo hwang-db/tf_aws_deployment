@@ -50,6 +50,12 @@ data "databricks_user" "this" { // using data because i'm adding the existing us
   user_name = "goinfrerie@gmail.com"
 }
 
+resource "databricks_user" "user2" {
+  provider  = databricks.ws1
+  user_name = "hao.wang@databricks.com"
+}
+
+
 resource "databricks_group_member" "vip_member" {
   provider  = databricks.ws1
   group_id  = databricks_group.this.id
@@ -65,8 +71,7 @@ module "engineering_compute_policy" {
   policy_overrides = {
     "dbus_per_hour" : {
       "type" : "range",
-      // only engineering guys can spin up big clusters
-      "maxValue" : 50
+      "maxValue" : 50 // only engineering guys can spin up big clusters
     },
   }
   depends_on = [

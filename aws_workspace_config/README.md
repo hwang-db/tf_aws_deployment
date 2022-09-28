@@ -3,6 +3,9 @@ AWS Databricks workspace management using Terraform
 
 This directory shows how to use terraform to manage workspace configurations, objects (like clusters, policies etc). We attempt to balance between configuration code complexity and flexibility. The goal is to provide a simple way to manage workspace configurations and objects, while allowing for maximum customization and governance.
 
+### Provider configurations for multiple workspaces
+
+Read this tutorial: https://www.terraform.io/language/modules/develop/providers
 
 ### Configure IP Access List for multiple workspaces
 
@@ -32,13 +35,22 @@ You need to explicitly pass in the provider information for each instance of mod
 
 ### Workspace Object Management
 
+We show how to create cluster from terraform `clusters.tf`. You can also create other objects like jobs, policies, permissions, users, groups etc.
 
 ### Cluster Policy Management
 
-Tagging from cluster policy
+[Tagging from cluster policy](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/cluster_policy)
 
+By defining in the cluster policy json like below, you can enforce default tags from policy:
+
+    "custom_tags.Team" : {
+      "type" : "fixed",
+      "value" : var.team
+    }
 
 <img src="../charts/tf_tagging.png" width="600">
 
+Ordinary (non-admin) users, by default will not be able to create unrestricted clusters; if allowed to create clusters, they will only be able to use the policies assigned to them to spin up clusters, thus you can have strict control over the cluster configurations among different groups. See below for and example of ordinary user created via terraform.
 
-Read this doc: https://www.terraform.io/language/modules/develop/providers
+<img src="../charts/user_policy.png" width="800">
+

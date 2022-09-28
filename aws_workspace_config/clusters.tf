@@ -1,7 +1,3 @@
-data "databricks_node_type" "smallest" {
-  local_disk = true
-}
-
 data "databricks_spark_version" "latest_lts" {
   long_term_support = true
 }
@@ -31,4 +27,3 @@ resource "databricks_cluster" "tiny" {
 output "sample_cluster_id" {
   value = databricks_cluster.tiny.cluster_id
 }
-

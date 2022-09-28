@@ -36,3 +36,40 @@ module "ip_access_list_workspace_2" {
   allow_list_label = "Allow List for workspace_2 "
   deny_list_label  = "Deny List for workspace_2 "
 }
+
+
+resource "databricks_group" "this" {
+  provider                   = databricks.ws1
+  display_name               = "engineering"
+  allow_cluster_create       = true
+  allow_instance_pool_create = true
+}
+
+data "databricks_user" "this" {
+  provider  = databricks.ws1
+  user_name = "goinfrerie@gmail.com"
+}
+
+resource "databricks_group_member" "vip_member" {
+  provider  = databricks.ws1
+  group_id  = databricks_group.this.id
+  member_id = data.databricks_user.this.id
+}
+
+module "engineering_compute_policy" {
+  providers = {
+    databricks = databricks.ws1
+  }
+  source = "./modules/base_policy"
+  team   = "engineering"
+  policy_overrides = {
+    "dbus_per_hour" : {
+      "type" : "range",
+      // only engineering guys can spin up big clusters
+      "maxValue" : 50
+    },
+  }
+  depends_on = [
+    databricks_group.this,
+  ]
+}

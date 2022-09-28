@@ -6,7 +6,7 @@ This directory shows how to use terraform to manage workspace configurations, ob
 
 ### Configure IP Access List for multiple workspaces
 
-In this example, we show how to patch multiple workspaces using multiple json files as input; the json file contains block lists and allow lists for each workspace and we use the exact json files generated in workspace deployment template inside this repo, see this [[link](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_databricks_modular_privatelink)] for more details.
+In this example, we show how to patch multiple workspaces using multiple json files as input; the json file contains block lists and allow lists for each workspace and we use the exact json files generated in workspace deployment template inside this repo, see this [[link](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_databricks_modular_privatelink#ip-access-list)] for more details.
 
 Assume you have deployed 2 workspaces using the template, hence you will find 2 generated json file under `../aws_databricks_modular_privatelink/artifacts/`, and you want to patch the IP access list for both workspaces. You can refer to `main.tf` and continue to add/remove the module instances you want. For each workspace, we recommend you using a dedicated block for configuration, like the one below:
 
@@ -21,7 +21,6 @@ module "ip_access_list_workspace_1" {
   block_list          = local.block_lists_map.workspace_1
   allow_list_label    = "Allow List for workspace_1"
   deny_list_label     = "Deny List for workspace_1"
-  host_ip_allow_label = "Host Machine's IP to be allowed for workspace_1"
 }
 ```
 

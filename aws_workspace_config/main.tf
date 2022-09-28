@@ -45,7 +45,7 @@ resource "databricks_group" "this" {
   allow_instance_pool_create = true
 }
 
-data "databricks_user" "this" {
+data "databricks_user" "this" { // using data because i'm adding the existing user into this group
   provider  = databricks.ws1
   user_name = "goinfrerie@gmail.com"
 }

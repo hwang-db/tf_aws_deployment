@@ -35,7 +35,10 @@ You need to explicitly pass in the provider information for each instance of mod
 
 ### Cluster Policy Management
 
+Tagging from cluster policy
 
+
+<img src="../charts/tf_tagging.png" width="400">
 
 
 Read this doc: https://www.terraform.io/language/modules/develop/providers

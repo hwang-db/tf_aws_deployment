@@ -15,8 +15,3 @@ variable "deny_list_label" {
   type    = string
   default = "Deny List"
 }
-
-variable "host_ip_allow_label" {
-  type    = string
-  default = "Host Machine's IP to be allowed"
-}

@@ -1,9 +1,9 @@
-variable "workspace_1_token" {
+variable "pat_ws_1" {
   type      = string
   sensitive = true
 }
 
-variable "workspace_2_token" {
+variable "pat_ws_2" {
   type      = string
   sensitive = true
 }

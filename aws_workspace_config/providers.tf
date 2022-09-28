@@ -8,12 +8,12 @@ terraform {
 
 provider "databricks" {
   alias = "ws1"
-  host  = "https://dbc-2c1ea93d-8b8a.cloud.databricks.com"
-  token = var.workspace_1_token
+  host  = "https://dbc-98458870-ba41.cloud.databricks.com"
+  token = var.pat_ws_1
 }
 
 provider "databricks" {
   alias = "ws2"
-  host  = "https://dbc-9cc5f025-7142.cloud.databricks.com"
-  token = var.workspace_2_token
+  host  = "https://dbc-78f2580e-97b1.cloud.databricks.com"
+  token = var.pat_ws_2
 }

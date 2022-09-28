@@ -56,6 +56,10 @@ module "workspace_collection" {
   ]
 }
 
+data "http" "my" { // check host machine public IP
+  url = "https://ifconfig.me"
+}
+
 // save deployment info to local file for future configuration
 resource "local_file" "deployment_information" {
   for_each = local.workspace_confs
@@ -64,7 +68,7 @@ resource "local_file" "deployment_information" {
     "prefix"        = "${local.workspace_confs[each.key].prefix}-${local.prefix}"
     "workspace_url" = module.workspace_collection[each.key].workspace_url
     "block_list"    = "${local.workspace_confs[each.key].block_list}"
-    "allow_list"    = "${local.workspace_confs[each.key].allow_list}"
+    "allow_list"    = "${concat(local.workspace_confs[each.key].allow_list, ["${data.http.my.body}/32"])}"
   })
   filename = "./artifacts/${each.key}.json"
 }

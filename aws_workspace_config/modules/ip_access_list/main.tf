@@ -13,18 +13,6 @@ resource "databricks_workspace_conf" "this" {
   }
 }
 
-data "http" "my" {
-  url = "https://ifconfig.me"
-}
-
-resource "databricks_ip_access_list" "current_machine_ip" {
-  label        = var.host_ip_allow_label
-  list_type    = "ALLOW"
-  ip_addresses = ["${data.http.my.body}/32"]
-  depends_on   = [databricks_workspace_conf.this]
-}
-
-
 resource "databricks_ip_access_list" "allow-list" {
   label        = var.allow_list_label
   list_type    = "ALLOW"

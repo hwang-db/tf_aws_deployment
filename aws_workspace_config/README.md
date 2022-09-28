@@ -4,21 +4,22 @@ AWS Databricks workspace management using Terraform
 This directory shows how to use terraform to manage workspace configurations, objects (like clusters, policies etc). We attempt to balance between configuration code complexity and flexibility. The goal is to provide a simple way to manage workspace configurations and objects, while allowing for maximum customization and governance.
 
 Specifically, you can find examples here for:
-1. [Multiple instances of providers management](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#provider-configurations-for-multiple-workspaces)
-2. [Configure IP Access Lists](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#configure-ip-access-list-for-multiple-workspaces)
-3. [Deploy workspace objects](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#workspace-object-management)
-4. [Configure cluster policies and restrict users to use only certain policies](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#cluster-policy-management)
-5. [Provision workspace users/groups]()
+1. [Provider configurations for multiple workspaces](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#provider-configurations-for-multiple-workspaces)
+2. [Configure IP Access List for multiple workspaces](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#configure-ip-access-list-for-multiple-workspaces)
+3. [Workspace Object Management](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#workspace-object-management)
+4. [Cluster Policy Management](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#cluster-policy-management)
+5. [Workspace users and groups](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_workspace_config#workspace-users-and-groups)
 
 ### Provider configurations for multiple workspaces
 
-Read this tutorial: https://www.terraform.io/language/modules/develop/providers
+If you want to manage multiple databricks workspaces using the same terraform project (folder), you must specify different provider configurations for each workspace. Examples can be found in `providers.tf`.
+When you spin up resources/modules, you need to explicitly pass in the provider information for each instance of module, such that terraform knows which workspace host to deploy the resources into; read this tutorial for details: https://www.terraform.io/language/modules/develop/providers
 
 ### Configure IP Access List for multiple workspaces
 
 In this example, we show how to patch multiple workspaces using multiple json files as input; the json file contains block lists and allow lists for each workspace and we use the exact json files generated in workspace deployment template inside this repo, see this [[link](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_databricks_modular_privatelink#ip-access-list)] for more details.
 
-Assume you have deployed 2 workspaces using the template, hence you will find 2 generated json file under `../aws_databricks_modular_privatelink/artifacts/`, and you want to patch the IP access list for both workspaces. You can refer to `main.tf` and continue to add/remove the module instances you want. For each workspace, we recommend you using a dedicated block for configuration, like the one below:
+Assume you have deployed 2 workspaces using the `aws_databricks_modular_privatelink` template, you will find 2 generated json file under `../aws_databricks_modular_privatelink/artifacts/`, and you want to patch the IP access list for both workspaces. You can refer to `main.tf` and continue to add/remove the module instances you want. For each workspace, we recommend you using a dedicated block for configuration, like the one below:
 
 ```hcl
 module "ip_access_list_workspace_1" {
@@ -36,9 +37,7 @@ module "ip_access_list_workspace_1" {
 
 Note that we also passed in the labels, this is to prevent strange errors when destroying IP Access Lists. This setup has been tested to work well for arbitrary re-patch / destroy of IP Access lists for multiple workspaces.
 
-About the Host Machine's IP - this template will automatically add the host (the machine that runs this terraform script) public IP into the allow list (this is required by the IP access list feature).
-
-You need to explicitly pass in the provider information for each instance of module, such that the resources know where to be deployed. 
+About the Host Machine's IP - in the generated json file, we had automatically added the host (the machine that runs this terraform script) public IP into the allow list (this is required by the IP access list feature).
 
 ### Workspace Object Management
 
@@ -61,6 +60,6 @@ Ordinary (non-admin) users, by default will not be able to create unrestricted c
 
 <img src="../charts/user_policy.png" width="1200">
 
-
 ### Workspace users and groups
-test
+
+You can manage users/groups inside terraform. Examples were given in `main.tf`. Note that with Unity Catalog, you can have account level users/groups. The example here is at workspace level.

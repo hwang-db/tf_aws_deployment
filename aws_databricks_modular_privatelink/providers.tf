@@ -1,4 +1,5 @@
 terraform {
+
   backend "s3" {
     bucket         = "tf-backend-bucket-haowang" # Replace this with your bucket name!
     key            = "global/s3-databricks-project/terraform.tfstate"
@@ -16,7 +17,6 @@ terraform {
       version = "~> 4.0"
     }
   }
-
 }
 
 provider "aws" {
@@ -25,9 +25,10 @@ provider "aws" {
 
 // initialize provider in "MWS" mode to provision new workspace
 provider "databricks" {
-  alias     = "mws"
-  host      = "https://accounts.cloud.databricks.com"
-  username  = var.databricks_account_username
-  password  = var.databricks_account_password
-  auth_type = "basic"
+  alias      = "mws"
+  host       = "https://accounts.cloud.databricks.com"
+  account_id = var.databricks_account_id
+  username   = var.databricks_account_username
+  password   = var.databricks_account_password
+  auth_type  = "basic"
 }

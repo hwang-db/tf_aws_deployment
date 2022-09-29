@@ -1,3 +1,24 @@
+variable "databricks_account_username" {
+  type = string
+}
+
+variable "databricks_account_password" {
+  type = string
+}
+
+variable "databricks_account_id" {
+  type = string
+}
+
+variable "region" {
+  type    = string
+  default = "ap-southeast-1"
+}
+
+variable "tags" {
+  default = {}
+}
+
 variable "databricks_workspace_ids" {
   description = <<EOT
   List of Databricks workspace IDs to be enabled with Unity Catalog.
@@ -5,7 +26,7 @@ variable "databricks_workspace_ids" {
   e.g. ["111111111", "222222222"]
   EOT
   type        = list(string)
-  default     = ["1528552498684811", "2448300997764810"]
+  default     = ["1528552498684811"]
 }
 
 variable "databricks_users" {
@@ -15,7 +36,7 @@ variable "databricks_users" {
   e.g ["first.last@domain.com", "second.last@domain.com"]
   EOT
   type        = list(string)
-  default     = ["hao.wang@databricks.com", "prashant.singh@databricks.com"]
+  default     = ["hao.wang@databricks.com", "prashant.singh@databricks.com", "goinfrerie@gmail.com"]
 }
 
 variable "databricks_metastore_admins" {
@@ -25,7 +46,7 @@ variable "databricks_metastore_admins" {
   e.g ["first.admin@domain.com", "second.admin@domain.com"]
   EOT
   type        = list(string)
-  default     = ["hao.wang@databricks.com"]
+  default     = ["hao.wang@databricks.com", "goinfrerie@gmail.com"]
 }
 
 variable "unity_admin_group" {

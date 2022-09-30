@@ -26,7 +26,7 @@ variable "databricks_workspace_ids" {
   e.g. ["111111111", "222222222"]
   EOT
   type        = list(string)
-  default     = ["1528552498684811"]
+  default     = ["3636669426257200"]
 }
 
 variable "databricks_users" {
@@ -36,7 +36,7 @@ variable "databricks_users" {
   e.g ["first.last@domain.com", "second.last@domain.com"]
   EOT
   type        = list(string)
-  default     = ["hao.wang@databricks.com", "prashant.singh@databricks.com", "goinfrerie@gmail.com"]
+  default     = ["hao.wang@databricks.com", "prashant.singh@databricks.com"]
 }
 
 variable "databricks_metastore_admins" {
@@ -46,7 +46,7 @@ variable "databricks_metastore_admins" {
   e.g ["first.admin@domain.com", "second.admin@domain.com"]
   EOT
   type        = list(string)
-  default     = ["hao.wang@databricks.com", "goinfrerie@gmail.com"]
+  default     = []
 }
 
 variable "unity_admin_group" {

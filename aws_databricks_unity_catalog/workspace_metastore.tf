@@ -60,7 +60,7 @@ resource "databricks_grants" "things" {
   provider = databricks.ws1
   schema   = databricks_schema.things.id
   grant {
-    principal  = "uc_admin_group_1"
+    principal  = "account users"
     privileges = ["USAGE", "CREATE"]
   }
 }

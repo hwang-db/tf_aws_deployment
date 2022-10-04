@@ -11,3 +11,9 @@ If you don't have an `account admin` identity, you can refer to stage 1:
 <img src="../charts/uc_tf_onboarding.png" width="1000">
 
 When running tf configs for UC resources, due to sometimes requires a few minutes to be ready and you may encounter errors along the way, so you can either wait for the UI to be updated before you apply and patch the next changes; or specifically add depends_on to accoune level resources
+
+## Get Started
+
+> Step 1: Fill in values in `terraform.tfvars`
+
+> Step 2: Run `terraform init` and `terraform apply` to deploy the resources. This will deploy both AWS resources that Unity Catalog requires and Databricks Account Level resources.

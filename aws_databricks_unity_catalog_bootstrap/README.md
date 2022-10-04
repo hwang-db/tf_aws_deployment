@@ -24,9 +24,9 @@ We propose 2-stage process to get onboarded to UC. Starting at the point where y
 
 We recommend using `account admin` identities to deploy unity catalog related resources.
 
-> In stage 1, you use `account owner` to create `account admins`, this can be done in either method:
+> In stage 1, you use `account owner` to create `account admins`, this can be done in either method below:
 > 1. Use this folder, authenticate the `mws` provider with `account owner`, and supply `account admin` in `terraform.tfvars`, do not put `account owner` into the admin list since we do not want terraform to manage `account owner`.
-> 2. You can directly create `account admin` on [account console](accounts.cloud.databricks.com) UI. 
+> 2. You can manually create `account admin` on [account console](accounts.cloud.databricks.com) UI. 
 >
 > In stage 2, you use the newly created account admin identity to authenticate the `databricks mws` provider, and create the unity catalog related resources, using example scripts in `aws_databricks_unity_catalog`.
 

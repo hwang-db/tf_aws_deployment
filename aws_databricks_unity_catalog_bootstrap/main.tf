@@ -36,7 +36,7 @@ resource "databricks_group_member" "admin_group_member" {
 }
 
 
-resource "databricks_user_role" "metastore_admin" { // this group is admin for metastore, also pre-requisite for creating metastore
+resource "databricks_user_role" "account_admin_role" { // this group is admin for metastore, also pre-requisite for creating metastore
   provider = databricks.mws
   for_each = toset(var.databricks_account_admins)
   user_id  = databricks_user.unity_users[each.value].id

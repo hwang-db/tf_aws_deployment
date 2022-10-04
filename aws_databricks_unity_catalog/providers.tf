@@ -18,7 +18,7 @@ provider "aws" {
 provider "databricks" {
   alias      = "mws"
   host       = "https://accounts.cloud.databricks.com"
-  account_id = var.databricks_account_id
+  account_id = var.databricks_account_id   // like a shared account? HA from multiple email accounts
   username   = var.databricks_account_username
   password   = var.databricks_account_password
   auth_type  = "basic"
@@ -26,12 +26,12 @@ provider "databricks" {
 
 provider "databricks" {
   alias = "ws1"
-  host  = "https://dbc-0162ae20-2722.cloud.databricks.com"
+  host  = "https://dbc-a1d8d35b-9204.cloud.databricks.com"
   token = var.pat_ws_1
 }
 
 provider "databricks" {
   alias = "ws2"
-  host  = "https://dbc-db10833c-d6ef.cloud.databricks.com"
+  host  = "https://dbc-5779d7bc-08cb.cloud.databricks.com"
   token = var.pat_ws_2
 }

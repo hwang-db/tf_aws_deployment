@@ -5,7 +5,7 @@ locals {
 // create users and groups at account level (not workspace user/group)
 resource "databricks_user" "unity_users" {
   provider  = databricks.mws
-  for_each  = toset(concat(var.databricks_users, var.databricks_metastore_admins))
+  for_each  = toset(concat(var.databricks_users, var.databricks_account_admins))
   user_name = each.key
   force     = true
 }
@@ -17,19 +17,18 @@ resource "databricks_group" "admin_group" {
 
 resource "databricks_group_member" "admin_group_member" {
   provider  = databricks.mws
-  for_each  = toset(var.databricks_metastore_admins)
+  for_each  = toset(var.databricks_account_admins)
   group_id  = databricks_group.admin_group.id
   member_id = databricks_user.unity_users[each.value].id
 }
 
-resource "databricks_user_role" "metastore_admin" {
+
+resource "databricks_user_role" "metastore_admin" { // this group is admin for metastore, also pre-requisite for creating metastore
   provider = databricks.mws
-  for_each = toset(var.databricks_metastore_admins)
+  for_each = toset(var.databricks_account_admins)
   user_id  = databricks_user.unity_users[each.value].id
   role     = "account_admin"
 }
-
-
 
 /*
 resource "aws_s3_bucket" "external" {

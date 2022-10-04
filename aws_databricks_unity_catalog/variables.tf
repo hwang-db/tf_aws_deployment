@@ -26,7 +26,7 @@ variable "databricks_workspace_ids" {
   e.g. ["111111111", "222222222"]
   EOT
   type        = list(string)
-  default     = ["3636669426257200"]
+  default     = ["4148036482536619"]
 }
 
 variable "databricks_users" {
@@ -36,23 +36,21 @@ variable "databricks_users" {
   e.g ["first.last@domain.com", "second.last@domain.com"]
   EOT
   type        = list(string)
-  default     = ["hao.wang@databricks.com", "prashant.singh@databricks.com"]
 }
 
-variable "databricks_metastore_admins" {
+
+variable "databricks_account_admins" {
   description = <<EOT
   List of Admins to be added at account-level for Unity Catalog.
   Enter with square brackets and double quotes
   e.g ["first.admin@domain.com", "second.admin@domain.com"]
   EOT
   type        = list(string)
-  default     = []
 }
 
 variable "unity_admin_group" {
   description = "Name of the admin group. This group will be set as the owner of the Unity Catalog metastore"
   type        = string
-  default     = "uc_admin_group_1"
 }
 
 variable "pat_ws_1" {

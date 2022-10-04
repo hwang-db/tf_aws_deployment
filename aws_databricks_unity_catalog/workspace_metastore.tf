@@ -5,6 +5,11 @@ resource "databricks_metastore" "this" {
   storage_root  = "s3://${aws_s3_bucket.metastore.id}/metastore"
   owner         = var.unity_admin_group
   force_destroy = true
+  depends_on = [
+    databricks_group.admin_group,
+    databricks_group_member.admin_group_member,
+    databricks_user_role.metastore_admin,
+  ]
 }
 
 resource "databricks_metastore_data_access" "this" {

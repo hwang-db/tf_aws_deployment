@@ -41,3 +41,11 @@ databricks_users          = [] (you can leave this as empty list)
 databricks_account_admins = ["hao.wang@databricks.com"] (do not put account owner in this list, add emails of the account admins)
 
 unity_admin_group         = " Bootstrap admin group" (this is the display name of the admin group)
+
+## Expected Outcome
+
+After running this template using `terraform init` and `terraform apply` with your provided list of account admins, you should see account admins' emails under the newly created group, thus you have successfully onboarded account admins identity to your Databricks Account. 
+
+<img src="../charts/uc_tf_account_admin.png" width="500">
+
+Now you can proceed to stage 2, navigate to `aws_databricks_unity_catalog` for stage 2 deployments.

@@ -104,7 +104,7 @@ At this step, your workspaces deployment and VPC networking infra should have be
 
 ## Private Links
 
-In this example, we used 1 VPC for all workspaces, and we used backend VPCE for Databricks clusters to communicate with control plane. All workspaces deployed into the same VPC will share one pair of VPCEs (onr for relay, one for rest api), typically since VPCEs can provide considerable bandwidth, you just need one such pair of VPCEs for all workspaces in each region. For HA setup, you can build VPCEs into multiple az as well. 
+In this example, we used 1 VPC for all workspaces, and we used backend VPCE for Databricks clusters to communicate with control plane. All workspaces deployed into the same VPC will share one pair of VPCEs (one for relay, one for rest api), typically since VPCEs can provide considerable bandwidth, you just need one such pair of VPCEs for all workspaces in each region. For HA setup, you can build VPCEs into multiple az as well. 
 
 ## IP Access List
 

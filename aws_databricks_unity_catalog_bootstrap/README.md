@@ -33,7 +33,7 @@ Refer to below diagram on the process.
 bootstrapping logic to use account owner to create additional account admins. 
 This is because we should not use account owner credentials in terraform project (for reasons like destroying itself will trigger issues etc).
 
-<img src="../charts/uc_tf_onboarding.png" width="800">
+<img src="../charts/uc_tf_onboarding.png" width="1000">
 
 databricks_users          = []
 databricks_account_admins = ["hao.wang@databricks.com"] // use UI to remove account owner, then remove account owner from this list

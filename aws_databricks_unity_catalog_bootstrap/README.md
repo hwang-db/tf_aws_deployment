@@ -48,4 +48,4 @@ After running this template using `terraform init` and `terraform apply` with yo
 
 <img src="../charts/uc_tf_account_admin.png" width="500">
 
-Now you can proceed to stage 2, navigate to `aws_databricks_unity_catalog` for stage 2 deployments.
+Now you can proceed to stage 2, navigate to [aws_databricks_unity_catalog](https://github.com/hwang-db/tf_aws_deployment/tree/main/aws_databricks_unity_catalog) for stage 2 deployments.

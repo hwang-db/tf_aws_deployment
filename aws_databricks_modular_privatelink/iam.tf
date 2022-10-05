@@ -34,3 +34,11 @@ resource "databricks_mws_credentials" "this" {
   depends_on       = [time_sleep.wait]
 }
 
+output "policy" {
+  value = data.databricks_aws_crossaccount_policy.this.json
+}
+/*
+output "assume_role_policy" {
+  value = data.databricks_aws_assume_role_policy.this.json
+}
+*/

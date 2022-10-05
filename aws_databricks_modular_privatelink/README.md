@@ -177,6 +177,16 @@ workspace_3 = var.workspace_3_config
 
 Then run `terraform apply`, workspace_3 will be deleted.
 
+### Configure IAM roles, S3 access policies and Instance Profile for clusters
+
+If you are using the traditional method of Instance Profile to configure cluster's access to S3, follow this [official guide](https://docs.databricks.com/administration-guide/cloud-configurations/aws/instance-profiles.html)
+
+The sample script in `instance_profile.tf` will help you create the instance profile and you can get the `arn` from tf output, you can then configure at workspace admin setting page like below:
+
+<img src="../charts/instance_profile.png" width="500">
+
+Next you need to configure permissions for users/groups to use this instance profile to spin up clusters, and the cluster will be able to access the S3 specified in the instance profile's IAM role's policy.
+
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

@@ -45,20 +45,19 @@ data "aws_iam_policy_document" "assume_role_for_ec2" {
   }
 }
 
-resource "aws_iam_role" "role_for_s3_access" {
-  name               = "${local.prefix}-ec2-role-for-s3"
-  description        = "iam role for ec2 to access s3"
-  assume_role_policy = data.aws_iam_policy_document.assume_role_for_ec2.json
-  tags               = var.tags
-}
-
-
 data "aws_iam_policy_document" "pass_role_for_s3_access" {
   statement {
     effect    = "Allow"
     actions   = ["iam:PassRole"]
     resources = [aws_iam_role.role_for_s3_access.arn]
   }
+}
+
+resource "aws_iam_role" "role_for_s3_access" {
+  name               = "${local.prefix}-ec2-role-for-s3"
+  description        = "iam role for ec2 to access s3"
+  assume_role_policy = data.aws_iam_policy_document.assume_role_for_ec2.json
+  tags               = var.tags
 }
 
 resource "aws_iam_policy" "pass_role_for_s3_access" {
@@ -72,14 +71,11 @@ resource "aws_iam_role_policy_attachment" "cross_account" {
   role       = aws_iam_role.role_for_s3_access.name
 }
 
-
-
 // add grant s3 access policy to role
 resource "aws_iam_role_policy_attachment" "test-attach-2" {
   policy_arn = aws_iam_policy.added_policy.arn
   role       = aws_iam_role.role_for_s3_access.name
 }
-
 
 resource "aws_iam_instance_profile" "instance_profile" {
   name = "${local.prefix}-instance-profile"
@@ -89,21 +85,4 @@ resource "aws_iam_instance_profile" "instance_profile" {
 resource "databricks_instance_profile" "instance_profile" {
   instance_profile_arn = aws_iam_instance_profile.instance_profile.arn
   skip_validation      = true
-}
-
-
-output "role_for_s3_access_id" {
-  value = aws_iam_role.role_for_s3_access.id
-}
-
-output "role_for_s3_access_name" {
-  value = aws_iam_role.role_for_s3_access.name
-}
-
-output "instance_profile_arn" {
-  value = aws_iam_instance_profile.instance_profile.arn
-}
-
-output "databricks_instance_profile_id" {
-  value = databricks_instance_profile.instance_profile.id
 }

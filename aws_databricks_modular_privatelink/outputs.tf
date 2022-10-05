@@ -15,3 +15,19 @@ output "databricks_token" {
   sensitive = true
 }
 */
+
+output "role_for_s3_access_id" {
+  value = aws_iam_role.role_for_s3_access.id
+}
+
+output "role_for_s3_access_name" {
+  value = aws_iam_role.role_for_s3_access.name
+}
+
+output "instance_profile_arn" {
+  value = aws_iam_instance_profile.instance_profile.arn
+}
+
+output "databricks_instance_profile_id" {
+  value = databricks_instance_profile.instance_profile.id
+}

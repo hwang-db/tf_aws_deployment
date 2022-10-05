@@ -187,7 +187,6 @@ The sample script in `instance_profile.tf` will help you create the instance pro
 
 Next you need to configure permissions for users/groups to use this instance profile to spin up clusters, and the cluster will be able to access the S3 specified in the instance profile's IAM role's policy.
 
-
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

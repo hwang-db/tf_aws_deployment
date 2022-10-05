@@ -72,7 +72,7 @@ resource "aws_iam_role_policy_attachment" "cross_account" {
 }
 
 // add grant s3 access policy to role
-resource "aws_iam_role_policy_attachment" "test-attach-2" {
+resource "aws_iam_role_policy_attachment" "s3-policy-attach" {
   policy_arn = aws_iam_policy.added_policy.arn
   role       = aws_iam_role.role_for_s3_access.name
 }

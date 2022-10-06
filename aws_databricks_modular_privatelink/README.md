@@ -181,7 +181,7 @@ Then run `terraform apply`, workspace_3 will be deleted.
 
 If you are using the traditional method of Instance Profile to configure cluster's access to S3, follow this [official guide](https://docs.databricks.com/administration-guide/cloud-configurations/aws/instance-profiles.html)
 
-The sample script in `instance_profile.tf` will help you create the instance profile and you can get the `arn` from tf output, you can then configure at workspace admin setting page like below:
+The sample script in `instance_profile.tf` will help you create the underlying IAM role and policies for you to create instance profile at workspace level, you will find the `arn` from tf output, you can then manually take the value and configure at workspace admin setting page like below:
 
 <img src="../charts/instance_profile.png" width="500">
 
@@ -190,7 +190,7 @@ Next you need to configure permissions for users/groups to use this instance pro
 
 ### Grant Access to other users to use this instance profile
 
-For the instance profile's undelying IAM role and policies, we define them here in this project, however, deploying instance profile to workspace is obviously a workspace configuration process, and we suggest you write the relevant tf scripts in workspace management project, not in this workspace deployment project. The screenshot in the above step is a manual version of adding instance profile inside your workspace. 
+Deploying instance profile to workspace is obviously a workspace configuration process, and we suggest you write the relevant tf scripts in workspace management project (such as inside `aws_workspace_config`), not in this workspace deployment project. The screenshot in the above step is a manual version of adding instance profile inside your workspace.
 
 By default, the instance profile you created from the above steps is only accessible to its creator and admin group. Thus you also need to do access control (permissions) and specify who can use such instance profile to spin up clusters. See sample tf script and tutorial here: 
 [Tutorial](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/instance_profile#granting-access-to-all-users)

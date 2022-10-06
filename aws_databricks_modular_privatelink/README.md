@@ -190,9 +190,10 @@ Next you need to configure permissions for users/groups to use this instance pro
 
 ### Grant Access to other users to use this instance profile
 
+For the instance profile's undelying IAM role and policies, we define them here in this project, however, deploying instance profile to workspace is obviously a workspace configuration process, and we suggest you write the relevant tf scripts in workspace management project, not in this workspace deployment project. The screenshot in the above step is a manual version of adding instance profile inside your workspace. 
+
 By default, the instance profile you created from the above steps is only accessible to its creator and admin group. Thus you also need to do access control (permissions) and specify who can use such instance profile to spin up clusters. See sample tf script and tutorial here: 
 [Tutorial](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/instance_profile#granting-access-to-all-users)
-
 
 
 <!-- BEGIN_TF_DOCS -->

@@ -187,6 +187,14 @@ The sample script in `instance_profile.tf` will help you create the instance pro
 
 Next you need to configure permissions for users/groups to use this instance profile to spin up clusters, and the cluster will be able to access the S3 specified in the instance profile's IAM role's policy.
 
+
+### Grant Access to other users to use this instance profile
+
+By default, the instance profile you created from the above steps is only accessible to its creator and admin group. Thus you also need to do access control (permissions) and specify who can use such instance profile to spin up clusters. See sample tf script and tutorial here: 
+[Tutorial](https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/instance_profile#granting-access-to-all-users)
+
+
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

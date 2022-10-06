@@ -17,6 +17,7 @@ This modular design also allows customer to deploy, manage and delete `individua
 
     .
     ├── iam.tf
+    ├── instance_profile.tf
     ├── main.tf
     ├── outputs.tf
     ├── privatelink.tf
@@ -179,7 +180,7 @@ Then run `terraform apply`, workspace_3 will be deleted.
 
 ### Configure IAM roles, S3 access policies and Instance Profile for clusters
 
-If you are using the traditional method of Instance Profile to configure cluster's access to S3, follow this [official guide](https://docs.databricks.com/administration-guide/cloud-configurations/aws/instance-profiles.html)
+This template illustrates the traditional method of creating Instance Profile to grant cluster with S3 bucket access, see [original official guide](https://docs.databricks.com/administration-guide/cloud-configurations/aws/instance-profiles.html)
 
 The sample script in `instance_profile.tf` will help you create the underlying IAM role and policies for you to create instance profile at workspace level, you will find the `arn` from tf output, you can then manually take the value and configure at workspace admin setting page like below:
 

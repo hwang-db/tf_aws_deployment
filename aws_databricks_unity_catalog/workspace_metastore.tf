@@ -46,7 +46,7 @@ resource "databricks_grants" "sandbox" {
   provider = databricks.ws1
   catalog  = databricks_catalog.sandbox.name
   grant {
-    principal  = "account users" // account users 
+    principal  = "account users" // account users
     privileges = ["USAGE", "CREATE"]
   }
 }
@@ -67,5 +67,40 @@ resource "databricks_grants" "things" {
   grant {
     principal  = "account users"
     privileges = ["USAGE", "CREATE"]
+  }
+}
+
+resource "aws_iam_role" "external_data_access" {
+  name                = "${local.prefix}-external-access"
+  assume_role_policy  = data.aws_iam_policy_document.passrole_for_uc.json
+  managed_policy_arns = [aws_iam_policy.external_data_access.arn]
+  tags = merge(var.tags, {
+    Name = "${local.prefix}-unity-catalog external access IAM role"
+  })
+}
+
+resource "databricks_storage_credential" "external" {
+  provider = databricks.ws1
+  name = aws_iam_role.external_data_access.name
+  aws_iam_role {
+    role_arn = aws_iam_role.external_data_access.arn
+  }
+  comment = "Managed by TF"
+}
+
+resource "databricks_external_location" "some" {
+  provider = databricks.ws1
+  name            = "external"
+  url             = "s3://${aws_s3_bucket.external.id}/some"
+  credential_name = databricks_storage_credential.external.id
+  comment         = "Managed by TF"
+}
+
+resource "databricks_grants" "some" {
+  provider = databricks.ws1
+  external_location = databricks_external_location.some.id
+  grant {
+    principal  = "admin group A"
+    privileges = ["CREATE_TABLE", "READ_FILES"]
   }
 }

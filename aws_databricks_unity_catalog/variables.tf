@@ -26,7 +26,7 @@ variable "databricks_workspace_ids" {
   e.g. ["111111111", "222222222"]
   EOT
   type        = list(string)
-  default     = ["4148036482536619"]
+  default     = ["2424101092929547"]
 }
 
 variable "databricks_users" {

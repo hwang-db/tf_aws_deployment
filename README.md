@@ -1,5 +1,8 @@
 # Terraform patterns for AWS Databricks deployments
 
+## [ARCHIVED REPO] This repo's content has been migrated to https://github.com/databricks/terraform-databricks-examples and will be archived; for new examples and patterns please direct to terraform-databricks-examples repo.
+
+
 Subdirectories are independent to each other, each represents a Terraform pattern of AWS Databricks workspace deployment.
 
 AWS Databricks deployment patterns:
